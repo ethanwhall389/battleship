@@ -1,4 +1,5 @@
 const GameBoard = require('../gameboard');
+const Ship = require('../ship');
 
 let board;
 beforeEach(() => {
@@ -13,10 +14,22 @@ test('gameboard created properly', () => {
     expect(typeof(board.board)).toBe('object');
 })
 
-test('ship is placeable at specific coordinates', () => {
-    board.placeShip(5, 5, 'vert');
+test('ship is placeable horizontally', () => {
+    board.placeShip(0, 0, 4, 'horiz');
     console.log(board.board);
-    console.log(board.board[5][5]);
-    expect(board.board[5][5].hasShip).toBe(true);
-    // expect(board.hasShip(5, 5)).toBe(true);
+    expect(board.hasShip(0, 0) && board.hasShip(0,1)).toBe(true);
+})
+
+test('ship is placeable vertically', () => {
+    board.placeShip(0, 0, 4, 'vert');
+    console.log(board.board);
+    expect(board.hasShip(0,0) && board.hasShip(1,0)).toBe(true);
+})
+
+test('changing ship\'s properties affects all hit ship\'s squares', () => {
+    board.placeShip(0, 0, 4, 'horiz');
+    board.placeShip(1, 0, 3, 'horiz');
+    board.board[0][0].hit();
+    console.log(board.board);
+    expect(board.board[0][0].hits && board.board[0][1].hits).toBe(1);
 })
