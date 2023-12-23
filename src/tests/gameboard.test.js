@@ -33,3 +33,15 @@ test('changing ship\'s properties affects all hit ship\'s squares', () => {
     console.log(board.board);
     expect(board.board[0][0].hits && board.board[0][1].hits).toBe(1);
 })
+
+test('Horizontal ships not placeable if they overflow board boundaries', () => {
+    board.placeShip(0, 4, 4, 'horiz');
+    console.log(board.board);
+    expect(board.hasShip(0,4)).toBe(false);
+})
+
+test('Vertical ships not placeable if they overflow board boundaries', () => {
+    board.placeShip(4, 0, 4, 'vert');
+    console.log(board.board);
+    expect(board.hasShip(0,4)).toBe(false);
+})

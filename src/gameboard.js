@@ -37,12 +37,22 @@ class GameBoard {
     placeShip(vertCoord, horzCoord, length, orientation) {
         const ship = new Ship(3);
         if (orientation === 'horiz') {
-            for (let i = 0; i < length; i++) {
-                this.board[vertCoord][horzCoord+i] = ship;
+            //check for horiz board overflow
+            if (horzCoord+length > this.width) {
+                return;
+            } else {
+                for (let i = 0; i < length; i++) {
+                    this.board[vertCoord][horzCoord+i] = ship;
+                }
             }
         } else if (orientation === 'vert') {
-            for (let i = 0; i < length; i++) {
-                this.board[vertCoord+i][horzCoord] = ship;
+            //check for vertical board overflow
+            if (vertCoord+length > this.height) {
+                return;
+            } else {
+                for (let i = 0; i < length; i++) {
+                    this.board[vertCoord+i][horzCoord] = ship;
+                }
             }
         }
     }
@@ -54,6 +64,7 @@ class GameBoard {
             return false;
         }
     }
+
     // placeShip(vertCoord, horzCoord, length, angle) {
     //     const ship = new Ship(length);
     //     console.log('Helllooooo');
