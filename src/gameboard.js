@@ -35,7 +35,7 @@ class GameBoard {
         // coordinate = our newly made ship
 
     placeShip(vertCoord, horzCoord, length, orientation) {
-        const ship = new Ship(3);
+        const ship = new Ship('Random', length);
         if (orientation === 'horiz') {
             //check for horiz board overflow
             if (horzCoord+length > this.width) {
@@ -62,7 +62,6 @@ class GameBoard {
             }
             //Place ship
             else {
-                console.log('made it to place ship');
                 for (let i = 0; i < length; i++) {
                     this.board[vertCoord+i][horzCoord] = ship;
                 }
@@ -78,13 +77,33 @@ class GameBoard {
         }
     }
 
+    receiveAttack(vertCoord, horzCoord) {
+        const coordinate = this.board[vertCoord][horzCoord];
+        if (coordinate !== null) {
+            coordinate.hit();
+        } else {
+            this.board[vertCoord][horzCoord] = 0;
+        }
+    }
+
+    allShipsSunk() {
+        //traverse the board
+        for (let i = 0; i < this.board.length; i++) {
+            for (let j = 0; j <this.board[i].length; j++) {
+                //check each ship to see if it's sunk
+                const coordinate = this.board[i][j];
+                if (coordinate !== null && coordinate !== 0) {
+                    if (!coordinate.sunk) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     checkHorizOverlap(vertCoord, horzCoord, shipLength) {
-        console.log('passed in vertCoord: ' + vertCoord);
         for (let i = 0; i < shipLength; i++) {
-            console.log('vertCoord: ' + vertCoord);
-            console.log('horizCoord: ');
-            console.log(horzCoord+i);
-            console.log(this.board[vertCoord][horzCoord+i]);
             if (this.board[vertCoord][horzCoord+i] !== null) {
                 //has overlap
                 return true;
@@ -96,10 +115,6 @@ class GameBoard {
     
     checkVertOverlap(vertCoord, horzCoord, shipLength) {
         for (let i = 0; i < shipLength; i++) {
-            console.log('vertCoord:');
-            console.log(vertCoord+i);
-            console.log('horizCoord: ' + horzCoord);
-            console.log(this.board[vertCoord+i][horzCoord]);
             if (this.board[vertCoord][horzCoord+i] !== null) {
                 //has overlap
                 return true;

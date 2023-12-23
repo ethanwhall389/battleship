@@ -4,7 +4,7 @@ const Ship = require('../ship');
 let testShip;
 
 beforeEach(() => {
-    testShip = new Ship(2);
+    testShip = new Ship('Random', 2);
 })
 
 test('records a hit', () => {

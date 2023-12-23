@@ -69,3 +69,32 @@ test('Verticle ships not placeable if they overlap another ship', () => {
     expect(board.hasShip(3,3)).toBe(false);
 })
 
+test('gameboard can record a hit', () => {
+    board.placeShip(2,3,3,'vert')
+    board.placeShip(5,0,3,'horiz');
+    board.receiveAttack(3,3);
+    expect(board.board[3][3].hits).toBe(1);
+    console.log(board.board);
+})
+
+test('gameboard can record a miss', () => {
+    board.placeShip(2,3,3,'vert');
+    board.receiveAttack(5,0);
+    expect(board.board[5][0]).toBe(0);
+    console.log(board.board);
+})
+
+test('can report all ships are sunk', () => {
+    board.placeShip(2,3,2,'vert');
+    board.receiveAttack(2,3);
+    board.receiveAttack(3,3);
+    console.log(board.board);
+    expect(board.allShipsSunk()).toBe(true);
+})
+
+test('can report all ships NOT sunk', () => {
+    board.placeShip(2,3,3,'vert');
+    board.receiveAttack(3,3);
+    console.log(board.board);
+    expect(board.allShipsSunk()).toBe(false);
+})
