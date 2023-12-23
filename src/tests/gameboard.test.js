@@ -26,6 +26,13 @@ test('ship is placeable vertically', () => {
     expect(board.hasShip(0,0) && board.hasShip(1,0)).toBe(true);
 })
 
+test('multiple non-overlapping ships placeable', () => {
+    board.placeShip(0,0,4,'vert');
+    board.placeShip(3,3,3,'horiz');
+    expect(board.hasShip(0,0) && board.hasShip(1,0)).toBe(true);
+    expect(board.hasShip(3,3) && board.hasShip(3,4)).toBe(true);
+})
+
 test('changing ship\'s properties affects all hit ship\'s squares', () => {
     board.placeShip(0, 0, 4, 'horiz');
     board.placeShip(1, 0, 3, 'horiz');
@@ -45,3 +52,20 @@ test('Vertical ships not placeable if they overflow board boundaries', () => {
     console.log(board.board);
     expect(board.hasShip(0,4)).toBe(false);
 })
+
+test('Horizontal ships not placeable if they overlap another ship', () => {
+    board.placeShip(0,2,4,'vert');
+    console.log(board.board);
+    board.placeShip(0,1,4,'horiz');
+    console.log(board.board);
+    expect(board.hasShip(0,1)).toBe(false);
+})
+
+test('Verticle ships not placeable if they overlap another ship', () => {
+    board.placeShip(0,3,3,'vert');
+    console.log(board.board);
+    board.placeShip(2,3,3,'vert');
+    console.log(board.board);
+    expect(board.hasShip(3,3)).toBe(false);
+})
+

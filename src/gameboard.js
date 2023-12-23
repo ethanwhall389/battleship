@@ -40,7 +40,13 @@ class GameBoard {
             //check for horiz board overflow
             if (horzCoord+length > this.width) {
                 return;
-            } else {
+            } 
+            //check for ship overlap
+            else if (this.checkHorizOverlap(vertCoord, horzCoord, length)) {
+                return;
+            }
+            //Place ship
+            else {
                 for (let i = 0; i < length; i++) {
                     this.board[vertCoord][horzCoord+i] = ship;
                 }
@@ -49,7 +55,14 @@ class GameBoard {
             //check for vertical board overflow
             if (vertCoord+length > this.height) {
                 return;
-            } else {
+            } 
+            //check for vertical ship overlap
+            else if (this.checkVertOverlap(vertCoord, horzCoord, length)) {
+                return;
+            }
+            //Place ship
+            else {
+                console.log('made it to place ship');
                 for (let i = 0; i < length; i++) {
                     this.board[vertCoord+i][horzCoord] = ship;
                 }
@@ -63,6 +76,37 @@ class GameBoard {
         } else {
             return false;
         }
+    }
+
+    checkHorizOverlap(vertCoord, horzCoord, shipLength) {
+        console.log('passed in vertCoord: ' + vertCoord);
+        for (let i = 0; i < shipLength; i++) {
+            console.log('vertCoord: ' + vertCoord);
+            console.log('horizCoord: ');
+            console.log(horzCoord+i);
+            console.log(this.board[vertCoord][horzCoord+i]);
+            if (this.board[vertCoord][horzCoord+i] !== null) {
+                //has overlap
+                return true;
+            }
+        }
+        //no overlap found
+        return false;
+    }
+    
+    checkVertOverlap(vertCoord, horzCoord, shipLength) {
+        for (let i = 0; i < shipLength; i++) {
+            console.log('vertCoord:');
+            console.log(vertCoord+i);
+            console.log('horizCoord: ' + horzCoord);
+            console.log(this.board[vertCoord+i][horzCoord]);
+            if (this.board[vertCoord][horzCoord+i] !== null) {
+                //has overlap
+                return true;
+            }
+        }
+        //no overlap found
+        return false;
     }
 
     // placeShip(vertCoord, horzCoord, length, angle) {
