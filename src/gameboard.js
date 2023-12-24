@@ -17,11 +17,11 @@ class GameBoard {
 
     createBoard() {
         let array = [];
-        for (let i = 0; i < this.height-1; i++) {
+        for (let i = 0; i < this.height; i++) {
             array.push([]);
         }
         // const array = new Array(this.height).fill({hasShip: false, isHit: false});
-        for(let i = 0; i < array.length-1; i++) {
+        for(let i = 0; i < array.length; i++) {
             for (let j = 0; j < this.width; j++) {
                 array[i].push(null);
             }
