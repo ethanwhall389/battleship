@@ -17,11 +17,11 @@ class GameBoard {
 
     createBoard() {
         let array = [];
-        for (let i = 0; i < this.height; i++) {
+        for (let i = 0; i < this.height-1; i++) {
             array.push([]);
         }
         // const array = new Array(this.height).fill({hasShip: false, isHit: false});
-        for(let i = 0; i < array.length; i++) {
+        for(let i = 0; i < array.length-1; i++) {
             for (let j = 0; j < this.width; j++) {
                 array[i].push(null);
             }
@@ -70,7 +70,7 @@ class GameBoard {
     }
 
     hasShip(vertCoord, horzCoord) {
-        if (this.board[vertCoord][horzCoord] !== null) {
+        if (this.board[vertCoord][horzCoord] !== null && this.board[vertCoord][horzCoord] !== 0) {
             return true;
         } else {
             return false;
@@ -79,6 +79,8 @@ class GameBoard {
 
     receiveAttack(vertCoord, horzCoord) {
         const coordinate = this.board[vertCoord][horzCoord];
+        console.log('coordinate: ');
+        console.log(coordinate);
         if (coordinate !== null) {
             coordinate.hit();
         } else {

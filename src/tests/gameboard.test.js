@@ -3,14 +3,14 @@ const Ship = require('../ship');
 
 let board;
 beforeEach(() => {
-    board = new GameBoard(6, 6);
+    board = new GameBoard(10, 10);
 
 })
 
 
 test('gameboard created properly', () => {
     console.log(board.board);
-    expect(board.width && board.height).toBe(6);
+    expect(board.width && board.height).toBe(10);
     expect(typeof(board.board)).toBe('object');
 })
 
@@ -42,7 +42,7 @@ test('changing ship\'s properties affects all hit ship\'s squares', () => {
 })
 
 test('Horizontal ships not placeable if they overflow board boundaries', () => {
-    board.placeShip(0, 4, 4, 'horiz');
+    board.placeShip(0, 8, 4, 'horiz');
     console.log(board.board);
     expect(board.hasShip(0,4)).toBe(false);
 })
@@ -79,8 +79,8 @@ test('gameboard can record a hit', () => {
 
 test('gameboard can record a miss', () => {
     board.placeShip(2,3,3,'vert');
-    board.receiveAttack(5,0);
-    expect(board.board[5][0]).toBe(0);
+    board.receiveAttack(4,0);
+    expect(board.board[4][0]).toBe(0);
     console.log(board.board);
 })
 
