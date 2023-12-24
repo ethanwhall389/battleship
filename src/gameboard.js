@@ -81,9 +81,11 @@ class GameBoard {
         const coordinate = this.board[vertCoord][horzCoord];
         console.log('coordinate: ');
         console.log(coordinate);
-        if (coordinate !== null) {
-            coordinate.hit();
-        } else {
+        if (this.hasShip(vertCoord, horzCoord)) {
+            if(!coordinate.hits.includes([vertCoord, horzCoord])) {
+                coordinate.hit(vertCoord, horzCoord);
+            }
+        } else if (coordinate !== 0) {
             this.board[vertCoord][horzCoord] = 0;
         }
     }

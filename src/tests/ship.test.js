@@ -11,13 +11,13 @@ describe('ship tests', () => {
     
     test('records a hit', () => {
         testShip.hit();
-        expect(testShip.hits).toBe(1);
+        expect(testShip.getHitNum()).toBe(1);
     })
     
     test('records more than one hit', () => {
         testShip.hit();
         testShip.hit();
-        expect(testShip.hits).toBe(2);
+        expect(testShip.getHitNum()).toBe(2);
     })
     
     test('records sunk if total length is hit', () => {

@@ -2,23 +2,34 @@ class Ship {
     constructor(name, length) {
         this.name = name;
         this.length = length;
-        this.hits = 0;
+        this.hits = [];
         this.sunk = false;
     }
 
-    hit() {
-        this.hits++;
+    hit(vertCoord, horzCoord) {
+        this.hits.push([vertCoord, horzCoord]);
         this.isSunk();
     }
 
+    //WORK on checking for hits
+    hitExists(hitsArray, vertCoord, horzCoord) {
+        hitsArray.some(arr => {
+
+        })
+    }
+
     isSunk() {
-        if (this.hits < this.length) {
+        if (this.hits.length < this.length) {
             this.sunk = false;
             return false;
         } else {
             this.sunk = true;
             return true;
         }
+    }
+
+    getHitNum() {
+        return this.hits.length;
     }
 }
 
