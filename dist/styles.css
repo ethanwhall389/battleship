@@ -1,0 +1,46 @@
+
+:root {
+    --accent: rgb(0, 173, 0);
+
+    --dark-bg: rgb(2, 0, 28);
+}
+
+.dark-mode {
+    background-color: var(--dark-bg);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+}
+
+.boards-cont {
+    display: flex;
+    justify-content: space-evenly;
+    border: 2px solid rgba(255, 0, 0, 0.322);
+}
+
+.board {
+    border: 2px solid var(--accent);
+    height: 45vw;
+    width: 45vw;
+    min-height: 300px;
+    min-width: 300px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    }
+
+.board-cell {
+    border: 1px solid var(--accent);
+    /* height:20%; */
+    /* width: 100%; */
+    /* padding-bottom: 100%; */
+    /* aspect-ratio: 1/1; */
+}

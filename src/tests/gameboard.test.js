@@ -7,23 +7,23 @@ beforeEach(() => {
 
 })
 
-describe.skip('gameboard tests', () => {
+describe('gameboard tests', () => {
 
     test('gameboard created properly', () => {
-        console.log(board.board);
+        // console.log(board.board);
         expect(board.width && board.height).toBe(10);
         expect(typeof(board.board)).toBe('object');
     })
     
     test('ship is placeable horizontally', () => {
         board.placeShip(0, 0, 4, 'horiz');
-        console.log(board.board);
+        // console.log(board.board);
         expect(board.hasShip(0, 0) && board.hasShip(0,1)).toBe(true);
     })
     
     test('ship is placeable vertically', () => {
         board.placeShip(0, 0, 4, 'vert');
-        console.log(board.board);
+        // console.log(board.board);
         expect(board.hasShip(0,0) && board.hasShip(1,0)).toBe(true);
     })
     
@@ -38,35 +38,35 @@ describe.skip('gameboard tests', () => {
         board.placeShip(0, 0, 4, 'horiz');
         board.placeShip(1, 0, 3, 'horiz');
         board.board[0][0]['ship'].hit(0, 0);
-        console.log(board.board);
+        // console.log(board.board);
         expect(board.board[0][0]['ship'].hits && board.board[0][1]['ship'].hits).toBe(1);
     })
     
     test('Horizontal ships not placeable if they overflow board boundaries', () => {
         board.placeShip(0, 8, 4, 'horiz');
-        console.log(board.board);
+        // console.log(board.board);
         expect(board.hasShip(0,4)).toBe(false);
     })
     
     test('Vertical ships not placeable if they overflow board boundaries', () => {
         board.placeShip(4, 0, 4, 'vert');
-        console.log(board.board);
+        // console.log(board.board);
         expect(board.hasShip(0,4)).toBe(false);
     })
     
     test('Horizontal ships not placeable if they overlap another ship', () => {
         board.placeShip(0,2,4,'vert');
-        console.log(board.board);
+        // console.log(board.board);
         board.placeShip(0,1,4,'horiz');
-        console.log(board.board);
+        // console.log(board.board);
         expect(board.hasShip(0,1)).toBe(false);
     })
     
     test('Verticle ships not placeable if they overlap another ship', () => {
         board.placeShip(0,3,3,'vert');
-        console.log(board.board);
+        // console.log(board.board);
         board.placeShip(2,3,3,'vert');
-        console.log(board.board);
+        // console.log(board.board);
         expect(board.hasShip(3,3)).toBe(false);
     })
     
@@ -75,13 +75,13 @@ describe.skip('gameboard tests', () => {
         board.placeShip(5,0,3,'horiz');
         board.receiveAttack(3,3);
         expect(board.board[3][3]['ship'].hits).toBe(1);
-        console.log(board.board);
+        // console.log(board.board);
     })
     
     test('gameboard can record a miss', () => {
         board.placeShip(2,3,3,'vert');
         board.receiveAttack(4,0);
-        console.log(board.board);
+        // console.log(board.board);
         expect(board.board[4][0]['isCellMissed']).toBe(true);
     })
     
@@ -89,14 +89,14 @@ describe.skip('gameboard tests', () => {
         board.placeShip(2,3,2,'vert');
         board.receiveAttack(2,3);
         board.receiveAttack(3,3);
-        console.log(board.board);
+        // console.log(board.board);
         expect(board.allShipsSunk()).toBe(true);
     })
     
     test('can report all ships NOT sunk', () => {
         board.placeShip(2,3,3,'vert');
         board.receiveAttack(3,3);
-        console.log(board.board);
+        // console.log(board.board);
         expect(board.allShipsSunk()).toBe(false);
     })
 

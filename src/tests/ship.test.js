@@ -3,7 +3,7 @@ const Ship = require('../ship');
 
 let testShip;
 
-describe.skip('ship tests', () => {
+describe('ship tests', () => {
 
     beforeEach(() => {
         testShip = new Ship('Random', 2);

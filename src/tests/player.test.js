@@ -24,7 +24,7 @@ describe('player tests', () => {
         // console.log(enemyBoard.board);
     })
 
-    test.only('computer does not attack same place twice', () => {
+    test('computer does not attack same place twice', () => {
         enemyBoard = new GameBoard(3, 3);
         player.computerAttack(enemyBoard);
         player.computerAttack(enemyBoard);
@@ -32,7 +32,7 @@ describe('player tests', () => {
         player.computerAttack(enemyBoard);
         player.computerAttack(enemyBoard);
         player.computerAttack(enemyBoard);
-        console.log(enemyBoard.board);
+        // console.log(enemyBoard.board);
     })
 
 
