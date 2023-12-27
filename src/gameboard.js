@@ -23,7 +23,7 @@ class GameBoard {
         // const array = new Array(this.height).fill({hasShip: false, isHit: false});
         for(let i = 0; i < array.length; i++) {
             for (let j = 0; j < this.width; j++) {
-                array[i].push(null);
+                array[i].push({isCellHit: false, isCellMissed: false, ship: false});
             }
             // array[i] = new Array(this.width).fill({hasShip: false, isHit: false});
         }
@@ -48,7 +48,7 @@ class GameBoard {
             //Place ship
             else {
                 for (let i = 0; i < length; i++) {
-                    this.board[vertCoord][horzCoord+i] = ship;
+                    this.board[vertCoord][horzCoord+i]['ship'] = ship;
                 }
             }
         } else if (orientation === 'vert') {
@@ -63,43 +63,44 @@ class GameBoard {
             //Place ship
             else {
                 for (let i = 0; i < length; i++) {
-                    this.board[vertCoord+i][horzCoord] = ship;
+                    this.board[vertCoord+i][horzCoord]['ship'] = ship;
                 }
             }
         }
     }
 
     hasShip(vertCoord, horzCoord) {
-        if (this.board[vertCoord][horzCoord] !== null && this.board[vertCoord][horzCoord] !== 0) {
-            return true;
-        } else {
+        if (this.board[vertCoord][horzCoord]['ship'] === false) {
             return false;
+        } else {
+            return true;
         }
     }
+
+    // hitExists()
 
     receiveAttack(vertCoord, horzCoord) {
         const coordinate = this.board[vertCoord][horzCoord];
         console.log('coordinate: ');
         console.log(coordinate);
         if (this.hasShip(vertCoord, horzCoord)) {
-            if(!coordinate.hits.includes([vertCoord, horzCoord])) {
-                coordinate.hit(vertCoord, horzCoord);
+            if (coordinate['isCellHit'] === false) {
+                coordinate['isCellHit'] = true;
+                coordinate['ship'].hit(vertCoord, horzCoord);
             }
-        } else if (coordinate !== 0) {
-            this.board[vertCoord][horzCoord] = 0;
+        } else if (coordinate['isCellMissed'] === false) {
+            coordinate['isCellMissed'] = true;
         }
     }
 
     allShipsSunk() {
         //traverse the board
         for (let i = 0; i < this.board.length; i++) {
-            for (let j = 0; j <this.board[i].length; j++) {
+            for (let j = 0; j < this.board[i].length; j++) {
                 //check each ship to see if it's sunk
                 const coordinate = this.board[i][j];
-                if (coordinate !== null && coordinate !== 0) {
-                    if (!coordinate.sunk) {
-                        return false;
-                    }
+                if (this.hasShip(i, j) && coordinate['ship']['sunk'] === false) {
+                    return false;
                 }
             }
         }
@@ -108,7 +109,7 @@ class GameBoard {
 
     checkHorizOverlap(vertCoord, horzCoord, shipLength) {
         for (let i = 0; i < shipLength; i++) {
-            if (this.board[vertCoord][horzCoord+i] !== null) {
+            if (this.board[vertCoord][horzCoord+i]['ship'] !== false) {
                 //has overlap
                 return true;
             }
@@ -119,7 +120,7 @@ class GameBoard {
     
     checkVertOverlap(vertCoord, horzCoord, shipLength) {
         for (let i = 0; i < shipLength; i++) {
-            if (this.board[vertCoord][horzCoord+i] !== null) {
+            if (this.board[vertCoord][horzCoord+i]['ship'] !== false) {
                 //has overlap
                 return true;
             }

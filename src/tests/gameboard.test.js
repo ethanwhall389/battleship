@@ -37,9 +37,9 @@ describe.skip('gameboard tests', () => {
     test('changing ship\'s properties affects all hit ship\'s squares', () => {
         board.placeShip(0, 0, 4, 'horiz');
         board.placeShip(1, 0, 3, 'horiz');
-        board.board[0][0].hit(0, 0);
+        board.board[0][0]['ship'].hit(0, 0);
         console.log(board.board);
-        expect(board.board[0][0].getHitNum() && board.board[0][1].getHitNum()).toBe(1);
+        expect(board.board[0][0]['ship'].hits && board.board[0][1]['ship'].hits).toBe(1);
     })
     
     test('Horizontal ships not placeable if they overflow board boundaries', () => {
@@ -74,15 +74,15 @@ describe.skip('gameboard tests', () => {
         board.placeShip(2,3,3,'vert')
         board.placeShip(5,0,3,'horiz');
         board.receiveAttack(3,3);
-        expect(board.board[3][3].getHitNum()).toBe(1);
+        expect(board.board[3][3]['ship'].hits).toBe(1);
         console.log(board.board);
     })
     
     test('gameboard can record a miss', () => {
         board.placeShip(2,3,3,'vert');
         board.receiveAttack(4,0);
-        expect(board.board[4][0]).toBe(0);
         console.log(board.board);
+        expect(board.board[4][0]['isCellMissed']).toBe(true);
     })
     
     test('can report all ships are sunk', () => {

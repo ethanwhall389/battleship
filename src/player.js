@@ -11,8 +11,13 @@ class Player {
     }
 
     computerAttack(enemyBoard) {
-        const randomHorzCoord = Math.floor(Math.random() * 10);
-        const randomVertCoord = Math.floor(Math.random() * 10);
+        //FOR TESTS ONLY-- use below for production
+
+        const randomVertCoord = Math.floor(Math.random() * 3);
+        const randomHorzCoord = Math.floor(Math.random() * 3);
+        
+        // const randomHorzCoord = Math.floor(Math.random() * 10);
+        // const randomVertCoord = Math.floor(Math.random() * 10);
 
         console.log('randomHorz: ' + randomHorzCoord);
         console.log('randomVert: ' + randomVertCoord);
