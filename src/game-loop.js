@@ -1,6 +1,7 @@
 const Player = require('./player');
 const GameBoard = require('./gameboard');
 const DomControl = require('./dom-control');
+const EventListeners = require('./event-listeners');
 
 class Game {
     constructor(pOneName, pTwoName, dimensions) {
@@ -31,10 +32,9 @@ game.pOneBoard.receiveAttack(4, 2);
 
 DomControl.updateDisplay(game.pOneBoard, game.pTwoBoard);
 
-// DomControl.displayBoard(game.pOneBoard);
-// DomControl.displayBoard(game.pTwoBoard);
 
-DomControl.inputAttack(game.pOneBoard, game.pTwoBoard);
+EventListeners.inputAttack(game.pOneBoard, game.pTwoBoard);
+EventListeners.hoverCoordinates(game.pOneBoard);
 
 // function newGame() {
 //     // const pOneName = 'Bill';

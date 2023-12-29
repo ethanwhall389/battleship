@@ -67,8 +67,8 @@ body {
     width: round(up, 45vw, 1); */
     /* height: 45vw;
     width: 45vw; */
-    height: 350px;
-    width: 350px;
+    height: 400px;
+    width: 400px;
     /* min-height: 300px;
     min-width: 300px; */
     display: flex;
@@ -79,8 +79,18 @@ body {
 
 .board-cell {
     border: 1px solid var(--accent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    letter-spacing: 1px;
     /* height:20%;
     width: 100%; */
     /* padding-bottom: 100%; */
     /* aspect-ratio: 1/1; */
+}
+
+.board-cell:hover{
+    cursor: pointer;
 }

@@ -16,21 +16,6 @@ class DomControl {
     }
     
     static displayBoard(gameBoard, boardElem) {
-        const boardCont = document.querySelector('.boards-cont');
-        
-        //create gameboard div, append to body
-        const board = gameBoard.board;
-        const totalCells = gameBoard.width * gameBoard.height;
-
-        // for (let i = 0; i <totalCells; i++) {
-        //     const cell = document.createElement('div');
-        //     cell.classList.add('board-cell');
-        //     console.log(boardElem.offsetWidth);
-        //     cell.style.width = `${boardElem.clientWidth / gameBoard.width}px`;
-        //     cell.style.height = `${boardElem.clientHeight / gameBoard.height}px`;
-        //     boardElem.appendChild(cell);
-        // }
-
         for (let i = 0; i < gameBoard.board.length; i++) {
             for (let j = 0; j < gameBoard.board[i].length; j++) {
                 
@@ -48,16 +33,6 @@ class DomControl {
             boardElem.appendChild(cellElem);
             }
         }
-
-
-        // for (let i = 0; i < board.length; i++) {
-        //     for (let j = 0; j < i.length; j++) {
-        //         const cell = document.createElement('div');
-        //         cell.classList.add('board-cell');
-        //         cell.width = 
-        //         //create a child element and append to dom
-        //     }
-        // }
     }
 
     static checkShip(cellElem, coordinate) {
@@ -78,18 +53,37 @@ class DomControl {
         }
     }
 
-    static inputAttack(playerBoard, enemyBoard) {
-        document.addEventListener('click', (event) => {
-            if (event.target.classList.contains('board-cell')) {
-                // console.log(event.target.getAttribute('data-coordinate'));
-                const coordinates = JSON.parse(event.target.getAttribute('data-coordinate'));
-                console.log(coordinates);
-                console.log(enemyBoard.board[coordinates[0], coordinates[1]]);
-                enemyBoard.receiveAttack(coordinates[0], coordinates[1]);
-                this.updateDisplay(playerBoard, enemyBoard);
-            }
-        })
+    static showCoordinate(event) {
+        const cellElem = event.target;
+        // const coordElem = document.createElement('p');
+        // coordElem.textContent = event.target.getAttribute('data-coordinate');
+
+        // cellElem.appendChild(coordElem);
+        const coord = JSON.parse(event.target.getAttribute('data-coordinate'));
+        const coordText = `${coord[0]},${coord[1]}`
+
+        cellElem.textContent = coordText;
     }
+
+    static removeCoordinate(event) {
+        const cellElem = event.target;
+        cellElem.textContent = '';
+    }
+
+    // static inputAttack(playerBoard, enemyBoard) {
+    //     document.addEventListener('click', (event) => {
+    //         if (event.target.classList.contains('board-cell')) {
+    //             // console.log(event.target.getAttribute('data-coordinate'));
+    //             const coordinates = JSON.parse(event.target.getAttribute('data-coordinate'));
+    //             console.log(coordinates);
+    //             console.log(enemyBoard.board[coordinates[0], coordinates[1]]);
+    //             enemyBoard.receiveAttack(coordinates[0], coordinates[1]);
+    //             this.updateDisplay(playerBoard, enemyBoard);
+    //         }
+    //     })
+    // }
 }
+
+
 
 module.exports = DomControl;
