@@ -1,16 +1,21 @@
 const DomControl = require('./dom-control');
 
 class EventListeners {
-    static inputAttack(playerBoard, enemyBoard) {
-        document.addEventListener('click', (event) => {
-            if (event.target.classList.contains('board-cell')) {
-                // console.log(event.target.getAttribute('data-coordinate'));
-                const coordinates = JSON.parse(event.target.getAttribute('data-coordinate'));
-                console.log(coordinates);
-                console.log(enemyBoard.board[coordinates[0], coordinates[1]]);
-                enemyBoard.receiveAttack(coordinates[0], coordinates[1]);
-                DomControl.updateDisplay(playerBoard, enemyBoard);
-            }
+    static inputAttack(enemyBoard) {
+        return new Promise (resolve => {
+
+            document.addEventListener('click', (event) => {
+                if (event.target.classList.contains('board-cell')) {
+                    // console.log(event.target.getAttribute('data-coordinate'));
+                    const coordinates = JSON.parse(event.target.getAttribute('data-coordinate'));
+                    console.log(coordinates);
+                    enemyBoard.receiveAttack(coordinates[0], coordinates[1]);
+                    // DomControl.displayTakeShot(this.playerOne);
+                    // DomControl.attackResponseMessage(enemyBoard.board[coordinates[0]][coordinates[1]]);
+                    resolve(enemyBoard.board[coordinates[0]][coordinates[1]]);
+                }
+            })
+
         })
     }
 

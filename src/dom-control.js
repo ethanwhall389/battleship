@@ -14,6 +14,14 @@ class DomControl {
         this.displayBoard(pOneBoard, playerBoardElem);
         this.displayBoard(pTwoBoard, enemyBoardElem);
     }
+
+    static displayPlayerNames(playerOne, playerTwo) {
+        const pOneName = document.querySelector('.player-one-name');
+        const pTwoName = document.querySelector('.player-two-name');
+        pOneName.textContent = playerOne.name;
+        pTwoName.textContent = playerTwo.name;
+
+    }
     
     static displayBoard(gameBoard, boardElem) {
         for (let i = 0; i < gameBoard.board.length; i++) {
@@ -68,6 +76,35 @@ class DomControl {
     static removeCoordinate(event) {
         const cellElem = event.target;
         cellElem.textContent = '';
+    }
+
+    static updateGameMessage(message) {
+        const messageElem = document.querySelector('.message');
+        const messageCont = document.querySelector('.message-cont');
+        messageElem.textContent = message;
+
+        messageCont.textContent = '';
+        messageCont.appendChild(messageElem);
+    }
+
+    static attackResponseMessage (cell) {
+        const messageElem = document.createElement('p');
+        const messageCont = document.querySelector('.message-cont');
+        console.log('cell: ');
+        console.log(cell);
+        if (cell.isCellMissed) {
+            messageElem.textContent = 'Miss!';
+        } else if (cell.isCellHit) {
+            messageElem.textContent = 'Hit!';
+        }
+
+        console.log(messageElem.textContent);
+        messageCont.appendChild(messageElem);
+    }
+
+    static displayTakeShot(player) {
+        const messageElem = document.createElement('p');
+        messageElem.textContent = `${player.name} Shoots...`;
     }
 
     // static inputAttack(playerBoard, enemyBoard) {

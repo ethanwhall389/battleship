@@ -5,65 +5,78 @@ const EventListeners = require('./event-listeners');
 
 class Game {
     constructor(pOneName, pTwoName, dimensions) {
-        this.pOneName = pOneName;
-        this.pTwoName = pTwoName;
         this.dimensions = dimensions;
 
-        this.playerOne - new Player(this.pOneName);
-        this.playerTwo = new Player(this.pTwoName);
+        this.playerOne = new Player(pOneName);
+        this.playerTwo = new Player(pTwoName);
 
         this.pOneBoard = new GameBoard(this.dimensions, this.dimensions)
         this.pTwoBoard = new GameBoard(this.dimensions, this.dimensions)
+
+        this.pOneBoard.placeShip(4, 2, 4, 'horiz');
+        this.pOneBoard.placeShip(1, 2, 2, 'vert');
+        this.pOneBoard.placeShip(9, 5, 4, 'horiz');
+        this.pTwoBoard.placeShip(5, 5, 4, 'horiz');
+        this.pTwoBoard.placeShip(6, 1, 3, 'vert');
+
+        DomControl.displayPlayerNames(this.playerOne, this.playerTwo);
+        DomControl.updateDisplay(this.pOneBoard, this.pTwoBoard);
+        EventListeners.hoverCoordinates();
+        this.gameLoop();
     }
 
+    pOneTurn () {
+        return new Promise (async resolve => {
+            DomControl.updateGameMessage(`${this.playerOne.name}'s turn!`);
+            await EventListeners.inputAttack(this.pTwoBoard);
+            DomControl.displayTakeShot(this.playerOne);
+            setTimeout( () => {
+                DomControl.attackResponseMessage()
+            })
+            DomControl.updateDisplay(this.pOneBoard, this.pTwoBoard);
+            setTimeout( () => {
+                resolve();
+            }, 1500);
+        })
+    }
+
+    pTwoTurn () {
+        return new Promise (resolve => {
+            DomControl.updateGameMessage(`${this.playerTwo.name}'s turn!`);   
+            EventListeners.inputAttack(this.pOneBoard);
+            setTimeout( () => {
+                resolve();
+            }, 2000);
+        })
+    }
+
+    async gameLoop () {
+        //Player one turn
+        await this.pOneTurn();
+
+        //check for win
+        await this.pTwoTurn();
+        DomControl.updateDisplay(this.pOneBoard, this.pTwoBoard);
+
+        //player two turn
+        //check for win
+        //if no win, recursive call gameLoop
+    }
 }
 
-const game = new Game('Bill', 'Sarah', 10);
+const name = prompt('What is your name?');
 
-game.pOneBoard.placeShip(4, 2, 4, 'horiz');
-game.pOneBoard.placeShip(1, 2, 2, 'vert');
-
-game.pTwoBoard.placeShip(5, 5, 4, 'horiz');
-
-game.pOneBoard.receiveAttack(7, 5);
-game.pTwoBoard.receiveAttack(2, 1);
-
-game.pOneBoard.receiveAttack(4, 2);
-
-DomControl.updateDisplay(game.pOneBoard, game.pTwoBoard);
-
-
-EventListeners.inputAttack(game.pOneBoard, game.pTwoBoard);
-EventListeners.hoverCoordinates(game.pOneBoard);
-
-// function newGame() {
-//     // const pOneName = 'Bill';
-//     // const pTwoName = 'Sarah';
-//     // const dimensions = 10;
-    
-//     // const playerOne = new Player(pOneName);
-//     // const playerTwo = new Player(pTwoName);
-    
-//     // const pOneBoard = new GameBoard(dimensions, dimensions);
-//     // const pTwoBoard = new GameBoard(dimensions, dimensions);
-
-//     pOneBoard.placeShip(4, 2, 4, 'horiz');
-//     pOneBoard.placeShip(1, 2, 2, 'vert');
-
-//     pTwoBoard.placeShip(5, 5, 4, 'horiz');
-
-//     pOneBoard.receiveAttack(7, 5);
-//     pTwoBoard.receiveAttack(2, 1);
-
-//     pOneBoard.receiveAttack(4, 2);
-
-//     DomControl.displayBoard(pOneBoard);
-//     DomControl.displayBoard(pTwoBoard);
-// }
+const game = new Game(name, 'Computer', 10);
 
 
 
-// newGame();
+// DomControl.displayPlayerNames(game.playerOne, game.playerTwo);
+// DomControl.updateDisplay(game.pOneBoard, game.pTwoBoard);
+
+
+// EventListeners.inputAttack(game.pOneBoard, game.pTwoBoard);
+// EventListeners.hoverCoordinates(game.pOneBoard);
+
 
 
 
