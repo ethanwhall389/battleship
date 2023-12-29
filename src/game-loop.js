@@ -2,7 +2,6 @@ const Player = require('./player');
 const GameBoard = require('./gameboard');
 const DomControl = require('./dom-control');
 
-console.log('heloooooo');
 
 function newGame() {
     const pOneName = 'Bill';
@@ -15,12 +14,10 @@ function newGame() {
     const pOneBoard = new GameBoard(dimensions, dimensions);
     const pTwoBoard = new GameBoard(dimensions, dimensions);
 
+    pOneBoard.placeShip(4, 2, 4, 'horiz');
+
     DomControl.displayBoard(pOneBoard);
     DomControl.displayBoard(pTwoBoard);
-}
-
-function displayBoards() {
-
 }
 
 newGame();
