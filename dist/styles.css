@@ -92,5 +92,5 @@ body {
 }
 
 .board-cell:hover{
-    cursor: pointer;
+    cursor: crosshair;
 }
