@@ -1,6 +1,25 @@
 const DomControl = require('./dom-control');
 
 class EventListeners {
+
+    static startGame() {
+        const startBttn = document.querySelector('#submit');
+        const nameInput = document.querySelector('#name');
+        const homeScreen = document.querySelector('.home-screen');
+        const gameScreen = document.querySelector('.game');
+
+        return new Promise (resolve => {
+            
+            startBttn.addEventListener('click', (event) => {
+                event.preventDefault();
+                homeScreen.style.display = 'none';
+                // gameScreen.style.display = 'block';
+                gameScreen.style.visibility = 'visible';
+                resolve(nameInput.value);
+            })
+        })
+    }
+
     static inputAttack(player, enemyBoard) {
         return new Promise (resolve => {
 

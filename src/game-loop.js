@@ -99,11 +99,23 @@ class Game {
         //if no win, recursive call gameLoop
         this.gameLoop();
     }
+
+    static async startGame() {
+        const name = await EventListeners.startGame();
+        console.log(name);
+        new Game(name, 'Computer', 10);
+    }
 }
 
-const name = prompt('What is your name?');
 
-const game = new Game(name, 'Computer', 10);
+
+// const name = EventListeners.startGame();
+
+// console.log(name);
+
+// new Game(name, 'Computer', 10);
+
+Game.startGame();
 
 
 
