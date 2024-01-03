@@ -11,26 +11,36 @@ class Player {
     }
 
     computerAttack(enemyBoard) {
-        //FOR TESTS ONLY-- use below for production
+        return new Promise ( resolve => {
 
-        const randomVertCoord = Math.floor(Math.random() * 3);
-        const randomHorzCoord = Math.floor(Math.random() * 3);
-        
-        // const randomHorzCoord = Math.floor(Math.random() * 10);
-        // const randomVertCoord = Math.floor(Math.random() * 10);
+            //FOR TESTS ONLY-- use below for production
+    
+            // const randomVertCoord = Math.floor(Math.random() * 3);
+            // const randomHorzCoord = Math.floor(Math.random() * 3);
+            
+            const randomHorzCoord = Math.floor(Math.random() * 10);
+            const randomVertCoord = Math.floor(Math.random() * 10);
+    
+            // console.log('randomHorz: ' + randomHorzCoord);
+            // console.log('randomVert: ' + randomVertCoord);
 
-        // console.log('randomHorz: ' + randomHorzCoord);
-        // console.log('randomVert: ' + randomVertCoord);
-
-        if (enemyBoard.board[randomVertCoord][randomHorzCoord] !== 0) {
-            if (enemyBoard.hasShip(randomVertCoord, randomHorzCoord)) {
-                if (!enemyBoard.board[randomVertCoord][randomHorzCoord].hits.includes([randomVertCoord, randomHorzCoord])) {
+            console.log('random coordinate chosen:');
+            console.log(enemyBoard.board[randomVertCoord][randomHorzCoord]);
+    
+            if (!enemyBoard.board[randomVertCoord][randomHorzCoord].isCellMissed) {
+                if (!enemyBoard.board[randomVertCoord][randomHorzCoord].isCellHit) {
                     this.attack(randomVertCoord, randomHorzCoord, enemyBoard);
+                    console.log('returned enemy board random cells:');
+                    console.log(enemyBoard.board[randomVertCoord][randomHorzCoord]);
+                    resolve(enemyBoard.board[randomVertCoord][randomHorzCoord]);
                 }
+            } else {
+                //Keep running random attacks until one satisfies
+                this.computerAttack(enemyBoard);
             }
-        } else {
-            this.computerAttack(enemyBoard);
-        }
+            
+
+        })
 
     }
 }

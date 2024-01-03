@@ -28,26 +28,52 @@ class Game {
     pOneTurn () {
         return new Promise (async resolve => {
             DomControl.updateGameMessage(`${this.playerOne.name}'s turn!`);
-            await EventListeners.inputAttack(this.pTwoBoard);
+            const clickedCell = await EventListeners.inputAttack(this.playerOne, this.pTwoBoard);
+            
             DomControl.displayTakeShot(this.playerOne);
+            
             setTimeout( () => {
-                DomControl.attackResponseMessage()
-            })
-            DomControl.updateDisplay(this.pOneBoard, this.pTwoBoard);
-            setTimeout( () => {
-                resolve();
-            }, 1500);
+                
+                DomControl.attackResponseMessage(clickedCell);
+                DomControl.updateDisplay(this.pOneBoard, this.pTwoBoard);
+                
+                setTimeout( () => {
+                    resolve();
+                }, 1500);
+
+            }, 1000);
+            
         })
     }
 
     pTwoTurn () {
-        return new Promise (resolve => {
+        return new Promise (async resolve => {
             DomControl.updateGameMessage(`${this.playerTwo.name}'s turn!`);   
-            EventListeners.inputAttack(this.pOneBoard);
+            
+            const clickedCell = await this.playerTwo.computerAttack(this.pOneBoard);
+            console.log('clicked cell:')
+            console.log(clickedCell);
+
+            // const clickedCell = await EventListeners.inputAttack(this.pOneBoard);
             setTimeout( () => {
-                resolve();
-            }, 2000);
+                DomControl.displayTakeShot(this.playerTwo);
+            }, 1000);
+
+            setTimeout( () => {
+
+                DomControl.attackResponseMessage(clickedCell);
+                DomControl.updateDisplay(this.pOneBoard, this.pTwoBoard);
+
+                setTimeout( () => {
+                    resolve();
+                }, 1500);
+
+            }, 2000)
         })
+    }
+
+    endGame (winningPlayer) {
+        DomControl.displayWinner(winningPlayer);
     }
 
     async gameLoop () {
@@ -55,12 +81,23 @@ class Game {
         await this.pOneTurn();
 
         //check for win
-        await this.pTwoTurn();
-        DomControl.updateDisplay(this.pOneBoard, this.pTwoBoard);
+        if (this.pTwoBoard.allShipsSunk()) {
+            this.endGame(this.playerOne);
+            return;
+        }
 
         //player two turn
+        await this.pTwoTurn();
+
         //check for win
+        if (this.pOneBoard.allShipsSunk()) {
+            this.endGame(this.playerTwo);
+            return;
+        }
+
+
         //if no win, recursive call gameLoop
+        this.gameLoop();
     }
 }
 

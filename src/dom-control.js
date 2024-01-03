@@ -104,7 +104,18 @@ class DomControl {
 
     static displayTakeShot(player) {
         const messageElem = document.createElement('p');
+        const messageCont = document.querySelector('.message-cont');
+
         messageElem.textContent = `${player.name} Shoots...`;
+        messageCont.appendChild(messageElem);
+    }
+
+    static displayWinner(winner) {
+        const messageElem = document.createElement('p');
+        const messageCont = document.querySelector('.message-cont');
+
+        messageElem.textContent = `${winner.name} wins!`;
+        messageCont.appendChild(messageElem);
     }
 
     // static inputAttack(playerBoard, enemyBoard) {

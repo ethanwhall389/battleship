@@ -1,7 +1,7 @@
 const DomControl = require('./dom-control');
 
 class EventListeners {
-    static inputAttack(enemyBoard) {
+    static inputAttack(player, enemyBoard) {
         return new Promise (resolve => {
 
             document.addEventListener('click', (event) => {
@@ -9,7 +9,8 @@ class EventListeners {
                     // console.log(event.target.getAttribute('data-coordinate'));
                     const coordinates = JSON.parse(event.target.getAttribute('data-coordinate'));
                     console.log(coordinates);
-                    enemyBoard.receiveAttack(coordinates[0], coordinates[1]);
+                    player.attack(coordinates[0], coordinates[1], enemyBoard);
+                    // enemyBoard.receiveAttack(coordinates[0], coordinates[1]);
                     // DomControl.displayTakeShot(this.playerOne);
                     // DomControl.attackResponseMessage(enemyBoard.board[coordinates[0]][coordinates[1]]);
                     resolve(enemyBoard.board[coordinates[0]][coordinates[1]]);
