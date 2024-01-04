@@ -11,8 +11,8 @@ class DomControl {
         playerBoardElem.textContent = '';
         enemyBoardElem.textContent = '';
 
-        this.displayBoard(pOneBoard, playerBoardElem);
-        this.displayBoard(pTwoBoard, enemyBoardElem);
+        this.displayPlayerBoard(pOneBoard, playerBoardElem);
+        this.displayOpponentBoard(pTwoBoard, enemyBoardElem);
     }
 
     static displayPlayerNames(playerOne, playerTwo) {
@@ -23,14 +23,14 @@ class DomControl {
 
     }
     
-    static displayBoard(gameBoard, boardElem) {
+    static displayPlayerBoard(gameBoard, boardElem) {
         for (let i = 0; i < gameBoard.board.length; i++) {
             for (let j = 0; j < gameBoard.board[i].length; j++) {
                 
             const cellElem = document.createElement('div');
             cellElem.classList.add('board-cell');
             cellElem.setAttribute('data-coordinate', `[${i}, ${j}]`)
-            console.log(boardElem.offsetWidth);
+            // console.log(boardElem.offsetWidth);
             cellElem.style.width = `${boardElem.clientWidth / gameBoard.width}px`;
             cellElem.style.height = `${boardElem.clientHeight / gameBoard.height}px`;
             
@@ -39,6 +39,24 @@ class DomControl {
             this.checkHit(cellElem, gameBoard.board[i][j]);
             
             boardElem.appendChild(cellElem);
+            }
+        }
+    }
+
+    static displayOpponentBoard(gameBoard, boardElem) {
+        for (let i = 0; i < gameBoard.board.length; i++) {
+            for (let j = 0; j < gameBoard.board[i].length; j++) {
+
+                const cellElem = document.createElement('div');
+                cellElem.classList.add('board-cell');
+                cellElem.setAttribute('data-coordinate', `[${i}, ${j}]`);
+                cellElem.style.width = `${boardElem.clientWidth / gameBoard.width}px`;
+                cellElem.style.height = `${boardElem.clientHeight / gameBoard.height}px`;
+                
+                this.checkMiss(cellElem, gameBoard.board[i][j]);
+                this.checkHit(cellElem, gameBoard.board[i][j]);
+
+                boardElem.appendChild(cellElem);
             }
         }
     }

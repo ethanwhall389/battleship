@@ -48,7 +48,12 @@ class Game {
 
     pTwoTurn () {
         return new Promise (async resolve => {
-            DomControl.updateGameMessage(`${this.playerTwo.name}'s turn!`);   
+            DomControl.updateGameMessage(`${this.playerTwo.name}'s turn!`); 
+            
+            //In case of a freeze up, re-call the function to keep game running;
+            // setTimeout( () => {
+            //     this.pTwoTurn();
+            // }, 3000);
             
             const clickedCell = await this.playerTwo.computerAttack(this.pOneBoard);
             console.log('clicked cell:')
