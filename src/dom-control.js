@@ -123,6 +123,17 @@ class DomControl {
         cellElem.textContent = '';
     }
 
+    static showPlacementHover(cellElem) {
+        // const cellElem = event.target;
+        cellElem.classList.add('placement-hover');
+        // cellElem.style.backgroundColor = 'blue';
+    }
+
+    static removePlacementHover(cellElem) {
+        // const cellElem = event.target;
+        cellElem.classList.remove('placement-hover');
+    }
+
     static updateGameMessage(message) {
         const messageElem = document.querySelector('.message');
         const messageCont = document.querySelector('.message-cont');

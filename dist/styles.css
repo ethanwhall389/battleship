@@ -13,6 +13,8 @@
     --dark-bg: rgb(2, 0, 28);
 
     --dark-details: rgb(46, 46, 53);
+
+    --placement-hover: rgb(158, 191, 223);
 }
 
 .dark-mode {
@@ -119,6 +121,10 @@ body {
 
 .ship-selected {
     border: 2px solid white;
+}
+
+.placement-hover {
+    background-color: var(--placement-hover);
 }
 
 

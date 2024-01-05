@@ -64,11 +64,11 @@ class EventListeners {
     }
 
     static selectShip() {
+            
         const ships = document.querySelectorAll('.ship');
 
         ships.forEach((ship) => {
             ship.addEventListener('click', (event) => {
-                event.stopImmediatePropagation();
                 ships.forEach(ship => {
                     ship.classList.remove('ship-selected');
                 })
@@ -77,8 +77,67 @@ class EventListeners {
                 const parent = event.target.parentNode;
                 const selectedShip = parent.getAttribute('data');
                 console.log(selectedShip);
+
+                this.showShipHover(selectedShip);
             })
         })
+
+    }
+
+    static showShipHover(ship) {
+        let shipLength = 0;
+        if (ship === 'carrier') {
+            shipLength = 5;
+        } else if (ship === 'battleship') {
+            shipLength = 4;
+        } else if (ship === 'cruiser') {
+            shipLength = 3;
+        } else if (ship === 'submarine') {
+            shipLength = 3;
+        } else if (ship === 'destroyer') {
+            shipLength = 2;
+        }
+        console.log(shipLength);
+
+        const mouseOverHandler = (event) => {
+            if (event.target.classList.contains('board-cell')) {
+
+                const currentCoord = JSON.parse(event.target.getAttribute('data-coordinate'));
+                // console.clear();
+                for (let i = 0; i < shipLength; i++) {
+                    // console.log(i);
+                    console.log(currentCoord[0]);
+                    console.log(currentCoord[1] + i);
+                    const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0]}, ${currentCoord[1] + i}]']`);
+                    DomControl.showPlacementHover(cellElem);
+                }
+
+            }
+            event.stopPropagation()
+        }
+
+        const mouseOutHandler = (event) => {
+            if (event.target.classList.contains('board-cell')) {
+
+                const currentCoord = JSON.parse(event.target.getAttribute('data-coordinate'));
+                for (let i = 0; i < shipLength; i++) {
+                    // console.log(currentCoord[0]);
+                    // console.log(currentCoord[1] + i);
+                    const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0]}, ${currentCoord[1] + i}]']`);
+                    DomControl.removePlacementHover(cellElem);
+                }
+            }
+        }
+
+        const boardCont = document.querySelector('.placement-board-cont');
+
+        boardCont.removeEventListener('mouseover', mouseOverHandler);
+        boardCont.removeEventListener('mouseout', mouseOutHandler);
+        boardCont.addEventListener('mouseover', mouseOverHandler);
+        boardCont.addEventListener('mouseout', mouseOutHandler);
+
+        
+
     }
 }
 

@@ -40,7 +40,6 @@ class Game {
 
         await PlaceShips.userPlaceShips(game.pOneBoard);
 
-        DomControl.hidePlaceShips();
         DomControl.showGame();
 
         DomControl.displayPlayerNames(game.playerOne, game.playerTwo);
