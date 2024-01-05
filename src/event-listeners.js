@@ -45,18 +45,22 @@ class EventListeners {
     }
 
     static hoverCoordinates(enemyBoard) {
-        const boardsCont = document.querySelector('.boards-main-cont');
-        boardsCont.addEventListener('mouseover', (event) => {
-            if (event.target.classList.contains('board-cell')) {
-                DomControl.showCoordinate(event);
-            }
+        // const boardsCont = document.querySelector('.boards-main-cont');
+        const boardsCont = document.querySelectorAll('.board-cont');
+        boardsCont.forEach(board => {
+            board.addEventListener('mouseover', (event) => {
+                if (event.target.classList.contains('board-cell')) {
+                    DomControl.showCoordinate(event);
+                }
+            })
+            
+            board.addEventListener('mouseout', (event) => {
+                if (event.target.classList.contains('board-cell')) {
+                    DomControl.removeCoordinate(event);
+                }
+            })
         })
 
-        boardsCont.addEventListener('mouseout', (event) => {
-            if (event.target.classList.contains('board-cell')) {
-                DomControl.removeCoordinate(event);
-            }
-        })
     }
 
     static selectShip() {
