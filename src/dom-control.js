@@ -15,6 +15,33 @@ class DomControl {
         this.displayOpponentBoard(pTwoBoard, enemyBoardElem);
     }
 
+    static hideHomeScreen() {
+        const homeScreen = document.querySelector('.home-screen');
+        // const gameScreen = document.querySelector('.game');
+
+        homeScreen.style.display = 'none';
+        // gameScreen.style.display = 'block';
+        // gameScreen.style.visibility = 'visible';
+    }
+
+    static showPlaceShipsScreen(gameBoard) {
+        const placeShipsScreen = document.querySelector('.place-ships-cont');
+        placeShipsScreen.style.display = 'flex';
+
+        const boardElem = document.querySelector('.place-ships-board');
+        this.displayPlayerBoard(gameBoard, boardElem);
+    }
+
+    static hidePlaceShips() {
+        const placeShipsScreen = document.querySelector('.place-ships-cont');
+        placeShipsScreen.style.display = 'none';
+    }
+
+    static showGame() {
+        const gameScreen = document.querySelector('.game');
+        gameScreen.style.display = 'block';
+    }
+
     static displayPlayerNames(playerOne, playerTwo) {
         const pOneName = document.querySelector('.player-one-name');
         const pTwoName = document.querySelector('.player-two-name');

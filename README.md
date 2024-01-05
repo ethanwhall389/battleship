@@ -2,8 +2,8 @@
 
 Needed implementations:
 
---hide enemy board's ships from user
---homescreen for entering player name
+--hide enemy board's ships from user - done 
+--homescreen for entering player name -done 
 --system for adding ships (drag and drop?)
 --A way for showing the user when a ship has been sunk.
 

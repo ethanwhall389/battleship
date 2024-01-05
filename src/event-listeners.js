@@ -5,17 +5,22 @@ class EventListeners {
     static startGame() {
         const startBttn = document.querySelector('#submit');
         const nameInput = document.querySelector('#name');
-        const homeScreen = document.querySelector('.home-screen');
-        const gameScreen = document.querySelector('.game');
 
         return new Promise (resolve => {
             
             startBttn.addEventListener('click', (event) => {
+                DomControl.hideHomeScreen();
                 event.preventDefault();
-                homeScreen.style.display = 'none';
-                // gameScreen.style.display = 'block';
-                gameScreen.style.visibility = 'visible';
                 resolve(nameInput.value);
+            })
+        })
+    }
+
+    static completePlacing() {
+        return new Promise (resolve => {
+            const completeBttn = document.querySelector('.complete-placing');
+            completeBttn.addEventListener('click', () => {
+                resolve();
             })
         })
     }
@@ -51,6 +56,24 @@ class EventListeners {
             if (event.target.classList.contains('board-cell')) {
                 DomControl.removeCoordinate(event);
             }
+        })
+    }
+
+    static selectShip() {
+        const ships = document.querySelectorAll('.ship');
+
+        ships.forEach((ship) => {
+            ship.addEventListener('click', (event) => {
+                event.stopImmediatePropagation();
+                ships.forEach(ship => {
+                    ship.classList.remove('ship-selected');
+                })
+
+                ship.classList.add('ship-selected');
+                const parent = event.target.parentNode;
+                const selectedShip = parent.getAttribute('data');
+                console.log(selectedShip);
+            })
         })
     }
 }

@@ -2,6 +2,7 @@ const Player = require('./player');
 const GameBoard = require('./gameboard');
 const DomControl = require('./dom-control');
 const EventListeners = require('./event-listeners');
+const PlaceShips = require('./place-ships');
 
 class Game {
     constructor(pOneName, pTwoName, dimensions) {
@@ -10,8 +11,14 @@ class Game {
         this.playerOne = new Player(pOneName);
         this.playerTwo = new Player(pTwoName);
 
-        this.pOneBoard = new GameBoard(this.dimensions, this.dimensions)
-        this.pTwoBoard = new GameBoard(this.dimensions, this.dimensions)
+        this.pOneBoard = new GameBoard(this.dimensions, this.dimensions);
+        this.pTwoBoard = new GameBoard(this.dimensions, this.dimensions);
+
+        // this.userPlaceShips(this.pOneBoard);
+        // this.computerPlaceShips(this.pTwoBoard);
+
+        // DomControl.hidePlaceShips();
+        // DomControl.showGame();
 
         this.pOneBoard.placeShip(4, 2, 4, 'horiz');
         this.pOneBoard.placeShip(1, 2, 2, 'vert');
@@ -19,11 +26,41 @@ class Game {
         this.pTwoBoard.placeShip(5, 5, 4, 'horiz');
         this.pTwoBoard.placeShip(6, 1, 3, 'vert');
 
-        DomControl.displayPlayerNames(this.playerOne, this.playerTwo);
-        DomControl.updateDisplay(this.pOneBoard, this.pTwoBoard);
-        EventListeners.hoverCoordinates();
-        this.gameLoop();
+        // DomControl.displayPlayerNames(this.playerOne, this.playerTwo);
+        // DomControl.updateDisplay(this.pOneBoard, this.pTwoBoard);
+        // EventListeners.hoverCoordinates();
+        // this.gameLoop();
     }
+
+    static async startGame() {
+        //show name screen, await name input
+        const name = await EventListeners.startGame();
+        console.log(name);
+        const game = new Game(name, 'Computer', 10);
+
+        await PlaceShips.userPlaceShips(game.pOneBoard);
+
+        DomControl.hidePlaceShips();
+        DomControl.showGame();
+
+        DomControl.displayPlayerNames(game.playerOne, game.playerTwo);
+        DomControl.updateDisplay(game.pOneBoard, game.pTwoBoard);
+        EventListeners.hoverCoordinates();
+        game.gameLoop();
+
+    }
+
+    // userPlaceShips(gameBoard) {
+    //     return new Promise (async resolve => {
+    //         DomControl.showPlaceShipsScreen(gameBoard);
+    //         EventListeners.hoverCoordinates();
+    //         await EventListeners.completePlacing();
+    //         resolve();
+    //         // setTimeout( () => {
+    //         //     resolve();
+    //         // }, 10000);
+    //     })
+    // }
 
     pOneTurn () {
         return new Promise (async resolve => {
@@ -103,12 +140,6 @@ class Game {
 
         //if no win, recursive call gameLoop
         this.gameLoop();
-    }
-
-    static async startGame() {
-        const name = await EventListeners.startGame();
-        console.log(name);
-        new Game(name, 'Computer', 10);
     }
 }
 
