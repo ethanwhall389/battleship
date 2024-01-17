@@ -84,7 +84,9 @@ class EventListeners {
 
     }
 
+
     static showShipHover(ship) {
+        console.log('showShipHover called with ship: ' + ship);
         let shipLength = 0;
         if (ship === 'carrier') {
             shipLength = 5;
@@ -97,23 +99,24 @@ class EventListeners {
         } else if (ship === 'destroyer') {
             shipLength = 2;
         }
-        console.log(shipLength);
+        console.log('ship length: ' + shipLength);
 
         const mouseOverHandler = (event) => {
+            console.log('mouseOver run');
             if (event.target.classList.contains('board-cell')) {
-
                 const currentCoord = JSON.parse(event.target.getAttribute('data-coordinate'));
                 // console.clear();
                 for (let i = 0; i < shipLength; i++) {
                     // console.log(i);
-                    console.log(currentCoord[0]);
-                    console.log(currentCoord[1] + i);
+                    console.log(`${currentCoord[0]}, ${currentCoord[1] + i}`);
                     const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0]}, ${currentCoord[1] + i}]']`);
                     DomControl.showPlacementHover(cellElem);
                 }
 
+                boardCont.addEventListener('mouseover', mouseOverHandler);
+                boardCont.addEventListener('mouseout', mouseOutHandler);        
+
             }
-            event.stopPropagation()
         }
 
         const mouseOutHandler = (event) => {
@@ -126,16 +129,19 @@ class EventListeners {
                     const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0]}, ${currentCoord[1] + i}]']`);
                     DomControl.removePlacementHover(cellElem);
                 }
+
+                boardCont.removeEventListener('mouseover', mouseOverHandler);
+                boardCont.removeEventListener('mouseout', mouseOutHandler);
+        
             }
         }
 
         const boardCont = document.querySelector('.placement-board-cont');
-
-        boardCont.removeEventListener('mouseover', mouseOverHandler);
-        boardCont.removeEventListener('mouseout', mouseOutHandler);
+        
+        
         boardCont.addEventListener('mouseover', mouseOverHandler);
         boardCont.addEventListener('mouseout', mouseOutHandler);
-
+        
         
 
     }

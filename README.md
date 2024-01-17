@@ -15,3 +15,8 @@ Edge cases:
 
 --Every once in a while the computer will freeze while taking it's turn.
 
+
+Issue Log
+
+--when selecting a ship to place, the ship selections seem to "stack" on each other each time a new one is clicked. This can be seen by looking at the hover coordinates logged to the console.
+
