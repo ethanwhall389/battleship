@@ -69,7 +69,7 @@ class EventListeners {
         
         const ships = document.querySelectorAll('.ship');
 
-        this.addHoverEvents(this.ship.length);
+        this.addHoverEvents();
 
         ships.forEach((ship) => {
             ship.addEventListener('click', (event) => {
@@ -80,7 +80,6 @@ class EventListeners {
                 ship.classList.add('ship-selected');
                 const parent = event.target.parentNode;
                 const selectedShip = parent.getAttribute('data');
-                console.log(selectedShip);
 
                 this.ship.length = this.calcShipLength(selectedShip);
             })
@@ -101,20 +100,14 @@ class EventListeners {
         } else if (ship === 'destroyer') {
             shipLength = 2;
         }
-        // console.log('ship length: ' + shipLength);
         return shipLength;
     }
 
     static mouseOverHandler = (event) => {
         const shipLength = this.ship.length;
-        console.log('ship length: ' + shipLength);
-        console.log('mouseOver run');
         if (event.target.classList.contains('board-cell')) {
             const currentCoord = JSON.parse(event.target.getAttribute('data-coordinate'));
-            // console.clear();
             for (let i = 0; i < shipLength; i++) {
-                // console.log(i);
-                console.log(`${currentCoord[0]}, ${currentCoord[1] + i}`);
                 const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0]}, ${currentCoord[1] + i}]']`);
                 DomControl.showPlacementHover(cellElem);
             }      
@@ -122,8 +115,7 @@ class EventListeners {
     }
 
     static mouseOutHandler = (event) => {
-        const shipLength = this.ship.length;
-        
+        const shipLength = this.ship.length; 
         if (event.target.classList.contains('board-cell')) {
             const currentCoord = JSON.parse(event.target.getAttribute('data-coordinate'));
             for (let i = 0; i < shipLength; i++) {
@@ -135,9 +127,8 @@ class EventListeners {
     
     static addHoverEvents(shipLength) {
         const boardCont = document.querySelector('.placement-board-cont');
-        boardCont.addEventListener('mouseover', event =>  this.mouseOverHandler(event, shipLength));
-        boardCont.addEventListener('mouseout', event => this.mouseOutHandler(event, shipLength));
-        console.log('events added');
+        boardCont.addEventListener('mouseover', event =>  this.mouseOverHandler(event));
+        boardCont.addEventListener('mouseout', event => this.mouseOutHandler(event));
     }
 }
 
