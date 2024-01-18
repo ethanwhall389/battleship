@@ -20,5 +20,6 @@ Issue Log
 
 --when selecting a ship to place, the ship selections seem to "stack" on each other each time a new one is clicked. This can be seen by looking at the hover coordinates logged to the console.
     --fix
-        every time a new ship is clicked, remove the event listeners
+        add the event listener only the first time a ship is selected.
+        from then on, every time a selection is made, only change the number of ships variable. The event listener is always active.
 
