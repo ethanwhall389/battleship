@@ -14,6 +14,7 @@ Edge cases:
 --user can attack by clicking on a coordinate on their own board, which attacks that coordinate on opponent's board.
 
 --Every once in a while the computer will freeze while taking it's turn.
+    I think this is caused by an issue in the await statement for the pTwoTurn computer attack. It seems once in a while the promise is never resolved.
 
 
 Issue Log

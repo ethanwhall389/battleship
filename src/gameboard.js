@@ -39,32 +39,34 @@ class GameBoard {
         if (orientation === 'horiz') {
             //check for horiz board overflow
             if (horzCoord+length > this.width) {
-                return;
+                return false;
             } 
             //check for ship overlap
             else if (this.checkHorizOverlap(vertCoord, horzCoord, length)) {
-                return;
+                return false;
             }
             //Place ship
             else {
                 for (let i = 0; i < length; i++) {
                     this.board[vertCoord][horzCoord+i]['ship'] = ship;
                 }
+                return true;
             }
         } else if (orientation === 'vert') {
             //check for vertical board overflow
             if (vertCoord+length > this.height) {
-                return;
+                return false;
             } 
             //check for vertical ship overlap
             else if (this.checkVertOverlap(vertCoord, horzCoord, length)) {
-                return;
+                return false;
             }
             //Place ship
             else {
                 for (let i = 0; i < length; i++) {
                     this.board[vertCoord+i][horzCoord]['ship'] = ship;
                 }
+                return true;
             }
         }
     }

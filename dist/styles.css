@@ -117,10 +117,16 @@ body {
 .ship {
     display: inline-flex;
     flex: 0;
+    margin: 2px;
 }
 
 .ship-selected {
     border: 2px solid white;
+}
+
+.disabled-selection {
+    pointer-events: none;
+    border: 2px solid gray
 }
 
 .placement-hover {

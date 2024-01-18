@@ -20,11 +20,8 @@ class Game {
         // DomControl.hidePlaceShips();
         // DomControl.showGame();
 
-        this.pOneBoard.placeShip(4, 2, 4, 'horiz');
-        this.pOneBoard.placeShip(1, 2, 2, 'vert');
-        this.pOneBoard.placeShip(9, 5, 4, 'horiz');
-        this.pTwoBoard.placeShip(5, 5, 4, 'horiz');
-        this.pTwoBoard.placeShip(6, 1, 3, 'vert');
+        // this.pTwoBoard.placeShip(5, 5, 4, 'horiz');
+        // this.pTwoBoard.placeShip(6, 1, 3, 'vert');
 
         // DomControl.displayPlayerNames(this.playerOne, this.playerTwo);
         // DomControl.updateDisplay(this.pOneBoard, this.pTwoBoard);
@@ -39,6 +36,7 @@ class Game {
         const game = new Game(name, 'Computer', 10);
 
         await PlaceShips.userPlaceShips(game.pOneBoard);
+        PlaceShips.computerPlaceShips(game.pTwoBoard);
 
         DomControl.showGame();
 

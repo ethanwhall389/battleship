@@ -63,7 +63,7 @@ class EventListeners {
 
     }
 
-    static ship = {length: 0};
+    static ship = {length: 0, selectedShipElem: null};
 
     static selectShip() {
         
@@ -82,6 +82,7 @@ class EventListeners {
                 const selectedShip = parent.getAttribute('data');
 
                 this.ship.length = this.calcShipLength(selectedShip);
+                this.ship.selectedShipElem = parent;
             })
         })
 
@@ -139,8 +140,12 @@ class EventListeners {
                     const currentCoord = JSON.parse(event.target.getAttribute('data-coordinate'));
                     const vert = currentCoord[0];
                     const horiz = currentCoord[1];
-                    gameBoard.placeShip(vert, horiz, this.ship.length, 'horiz');
-                    DomControl.updatePlaceShipsBoard(gameBoard);
+                    const success = gameBoard.placeShip(vert, horiz, this.ship.length, 'horiz');
+                    if (success === true) {
+                        DomControl.updatePlaceShipsBoard(gameBoard);
+                        DomControl.disableShipSelection(this.ship.selectedShipElem);
+                        this.ship.length = 0;
+                    }
                 }
             }
         })
