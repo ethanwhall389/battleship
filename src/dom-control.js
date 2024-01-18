@@ -32,6 +32,12 @@ class DomControl {
         this.displayPlayerBoard(gameBoard, boardElem);
     }
 
+    static updatePlaceShipsBoard(gameBoard) {
+        const boardElem = document.querySelector('.place-ships-board');
+        boardElem.textContent = '';
+        this.displayPlayerBoard(gameBoard, boardElem);
+    }
+
     static hidePlaceShips() {
         const placeShipsScreen = document.querySelector('.place-ships-cont');
         placeShipsScreen.style.display = 'none';

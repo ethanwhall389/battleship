@@ -130,6 +130,21 @@ class EventListeners {
         boardCont.addEventListener('mouseover', event =>  this.mouseOverHandler(event));
         boardCont.addEventListener('mouseout', event => this.mouseOutHandler(event));
     }
+
+    static placeShip(gameBoard) {
+        const boardCont = document.querySelector('.placement-board-cont');
+        boardCont.addEventListener('click', (event) => {
+            if (event.target.classList.contains('board-cell')) {
+                if (this.ship.length !== 0) {
+                    const currentCoord = JSON.parse(event.target.getAttribute('data-coordinate'));
+                    const vert = currentCoord[0];
+                    const horiz = currentCoord[1];
+                    gameBoard.placeShip(vert, horiz, this.ship.length, 'horiz');
+                    DomControl.updatePlaceShipsBoard(gameBoard);
+                }
+            }
+        })
+    }
 }
 
 module.exports = EventListeners;

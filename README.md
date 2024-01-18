@@ -23,3 +23,9 @@ Issue Log
         add the event listener only the first time a ship is selected.
         from then on, every time a selection is made, only change the number of ships variable. The event listener is always active.
 
+
+
+
+Refactoring:
+-- change all of the vert and horiz in code to x and y
+
