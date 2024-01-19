@@ -185,6 +185,10 @@ class DomControl {
         messageCont.appendChild(messageElem);
     }
 
+    static disableInput() {
+        
+    }
+
     // static inputAttack(playerBoard, enemyBoard) {
     //     document.addEventListener('click', (event) => {
     //         if (event.target.classList.contains('board-cell')) {

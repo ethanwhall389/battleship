@@ -19,9 +19,10 @@ class PlaceShips {
         let shipLengths = [5, 4, 3, 3, 2];
 
         while (shipLengths.length >= 1) {
-            const randomVert = Math.floor(Math.random() * 9);
-            const randomHorz = Math.floor(Math.random() * 9);
-            const randomOrient = Math.floor(Math.random() * 2);    
+            const randomVert = Math.floor(Math.random() * 9) + 1;
+            const randomHorz = Math.floor(Math.random() * 9) + 1;
+            const randomOrient = Math.round(Math.random()); 
+            console.log('random orientation chosen: ' + orientOptions[randomOrient]);   
             const success = gameBoard.placeShip(randomVert, randomHorz, shipLengths[0], orientOptions[randomOrient] )
             if (success === true) {
                 console.log('ship placed');

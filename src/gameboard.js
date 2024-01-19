@@ -35,6 +35,7 @@ class GameBoard {
         // coordinate = our newly made ship
 
     placeShip(vertCoord, horzCoord, length, orientation) {
+        // console.log('Ship that is being placed is: ' + length + ' units long');
         const ship = new Ship('Random', length);
         if (orientation === 'horiz') {
             //check for horiz board overflow
@@ -50,6 +51,7 @@ class GameBoard {
                 for (let i = 0; i < length; i++) {
                     this.board[vertCoord][horzCoord+i]['ship'] = ship;
                 }
+                console.log(`Ship placed at ${vertCoord}, ${horzCoord}, ${orientation}, length of ${length}`)
                 return true;
             }
         } else if (orientation === 'vert') {
@@ -66,6 +68,7 @@ class GameBoard {
                 for (let i = 0; i < length; i++) {
                     this.board[vertCoord+i][horzCoord]['ship'] = ship;
                 }
+                console.log(`Ship placed at ${vertCoord}, ${horzCoord}, ${orientation}, length of ${length}`)
                 return true;
             }
         }
@@ -122,6 +125,7 @@ class GameBoard {
     
     checkVertOverlap(vertCoord, horzCoord, shipLength) {
         for (let i = 0; i < shipLength; i++) {
+            console.log(`coord: ${vertCoord}, ${horzCoord+i}`);
             if (this.board[vertCoord][horzCoord+i]['ship'] !== false) {
                 //has overlap
                 return true;
