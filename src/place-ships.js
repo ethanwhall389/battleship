@@ -14,7 +14,7 @@ class PlaceShips {
         })
     }
 
-    static computerPlaceShips(gameBoard) {
+    static randomPlaceShips(gameBoard) {
         const orientOptions = ['vert', 'horiz'];
         let shipLengths = [5, 4, 3, 3, 2];
 

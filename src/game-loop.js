@@ -36,7 +36,7 @@ class Game {
         const game = new Game(name, 'Computer', 10);
 
         await PlaceShips.userPlaceShips(game.pOneBoard);
-        PlaceShips.computerPlaceShips(game.pTwoBoard);
+        PlaceShips.randomPlaceShips(game.pTwoBoard);
 
         DomControl.showGame();
 
