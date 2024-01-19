@@ -2,16 +2,19 @@
 
 Needed implementations:
 
+--system for adding ships (drag and drop?)
+    --enable ability to change orientation
+--A way for showing the user when a ship has been sunk.
 --hide enemy board's ships from user - done 
 --homescreen for entering player name -done 
---system for adding ships (drag and drop?)
---A way for showing the user when a ship has been sunk.
 
-Edge cases:
+Nice-to-have implemenations
+
+--add option for user to randomly generate their ships' layout (easy)
 
 
 
---user can attack by clicking on a coordinate on their own board, which attacks that coordinate on opponent's board.
+
 
 
 
@@ -24,6 +27,10 @@ CURRENT
 
 --user can make attacks even when it isn't his turn.
     --fix: Inside the game loop, whenever it's one players turn, run a dom function that disables the other players' ability to input.
+
+--user can attack by clicking on a coordinate on their own board, which attacks that coordinate on opponent's board.
+
+--user can start the game without placing any ships.
 
 FIXED
 --when selecting a ship to place, the ship selections seem to "stack" on each other each time a new one is clicked. This can be seen by looking at the hover coordinates logged to the console.

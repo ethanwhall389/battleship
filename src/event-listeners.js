@@ -63,13 +63,14 @@ class EventListeners {
 
     }
 
-    static ship = {length: 0, selectedShipElem: null};
+    static ship = {length: 0, selectedShipElem: null, orientation: 'x'};
 
     static selectShip() {
         
         const ships = document.querySelectorAll('.ship');
 
         this.addHoverEvents();
+        this.changeOrientation();
 
         ships.forEach((ship) => {
             ship.addEventListener('click', (event) => {
@@ -86,6 +87,13 @@ class EventListeners {
             })
         })
 
+    }
+
+    static changeOrientation() {
+        const orientBttn = document.querySelector('.change-orientation');
+        orientBttn.addEventListener('click', (event) => {
+            console.log(event.target);
+        })
     }
 
     static calcShipLength(ship) {
@@ -109,8 +117,13 @@ class EventListeners {
         if (event.target.classList.contains('board-cell')) {
             const currentCoord = JSON.parse(event.target.getAttribute('data-coordinate'));
             for (let i = 0; i < shipLength; i++) {
-                const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0]}, ${currentCoord[1] + i}]']`);
-                DomControl.showPlacementHover(cellElem);
+                if (this.ship.orientation === 'x') {
+                    const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0]}, ${currentCoord[1] + i}]']`);
+                    DomControl.showPlacementHover(cellElem);
+                } else if (this.ship.orientation === 'y') {
+                    const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0] + i}, ${currentCoord[1]}]']`);
+                    DomControl.showPlacementHover(cellElem);
+                }
             }      
         }
     }
@@ -120,8 +133,16 @@ class EventListeners {
         if (event.target.classList.contains('board-cell')) {
             const currentCoord = JSON.parse(event.target.getAttribute('data-coordinate'));
             for (let i = 0; i < shipLength; i++) {
-                const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0]}, ${currentCoord[1] + i}]']`);
-                DomControl.removePlacementHover(cellElem);
+                if (this.ship.orientation === 'x') {
+                    const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0]}, ${currentCoord[1] + i}]']`);
+                    DomControl.removePlacementHover(cellElem);
+                } else if (this.ship.orientation === 'y') {
+                    const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0] + i}, ${currentCoord[1]}]']`);
+                    DomControl.removePlacementHover(cellElem);
+                }
+                
+                // const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0]}, ${currentCoord[1] + i}]']`);
+                // DomControl.removePlacementHover(cellElem);
             }
         }
     }

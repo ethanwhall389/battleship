@@ -133,6 +133,18 @@ body {
     background-color: var(--placement-hover);
 }
 
+.options {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.change-orientation {
+    border: 2px solid var(--accent);
+    padding: 5px;
+}
+
 
 
 /* GAME */
