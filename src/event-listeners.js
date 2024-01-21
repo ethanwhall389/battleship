@@ -116,10 +116,6 @@ class EventListeners {
                 const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0]}, ${currentCoord[1] + i}]']`);
                 DomControl.showPlacementHover(cellElem);
             }
-
-            // boardCont.addEventListener('mouseover', mouseOverHandler);
-            // boardCont.addEventListener('mouseout', mouseOutHandler);        
-
         }
     }
 
