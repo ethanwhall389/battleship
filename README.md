@@ -2,11 +2,11 @@
 
 Needed implementations:
 
---system for adding ships (drag and drop?)
-    --enable ability to change orientation
 --A way for showing the user when a ship has been sunk.
 --hide enemy board's ships from user - done 
 --homescreen for entering player name -done 
+--system for adding ships (drag and drop?) -done
+    --enable ability to change orientation
 
 Nice-to-have implemenations
 
