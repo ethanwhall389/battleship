@@ -90,9 +90,19 @@ class EventListeners {
     }
 
     static changeOrientation() {
-        const orientBttn = document.querySelector('.change-orientation');
+        const orientBttn = document.querySelector('.orientation-bttn');
         orientBttn.addEventListener('click', (event) => {
-            console.log(event.target);
+            if (event.target.classList.contains('orientation-bttn')) {
+                if (event.target.getAttribute('data-axis') === 'x') {
+                    event.target.setAttribute('data-axis', 'y');
+                    event.target.textContent = 'Place on Y axis';
+                    this.ship.orientation = 'y';
+                } else {
+                    event.target.setAttribute('data-axis', 'x');
+                    event.target.textContent = 'Place on X axis';
+                    this.ship.orientation = 'x';
+                }
+            }
         })
     }
 
@@ -161,7 +171,13 @@ class EventListeners {
                     const currentCoord = JSON.parse(event.target.getAttribute('data-coordinate'));
                     const vert = currentCoord[0];
                     const horiz = currentCoord[1];
-                    const success = gameBoard.placeShip(vert, horiz, this.ship.length, 'horiz');
+                    let orientation = '';
+                    if (this.ship.orientation === 'x') {
+                        orientation = 'horiz';
+                    } else {
+                        orientation = 'vert';
+                    }
+                    const success = gameBoard.placeShip(vert, horiz, this.ship.length, orientation);
                     if (success === true) {
                         DomControl.updatePlaceShipsBoard(gameBoard);
                         DomControl.disableShipSelection(this.ship.selectedShipElem);

@@ -140,7 +140,7 @@ body {
     justify-content: space-evenly;
 }
 
-.change-orientation {
+.orientation-cont {
     border: 2px solid var(--accent);
     padding: 5px;
 }
