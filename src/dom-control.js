@@ -32,6 +32,16 @@ class DomControl {
         this.displayPlayerBoard(gameBoard, boardElem);
     }
 
+    static updatePlaceShipsBoard(gameBoard) {
+        const boardElem = document.querySelector('.place-ships-board');
+        boardElem.textContent = '';
+        this.displayPlayerBoard(gameBoard, boardElem);
+    }
+
+    static disableShipSelection(elem) {
+        elem.classList.add('disabled-selection');
+    }
+
     static hidePlaceShips() {
         const placeShipsScreen = document.querySelector('.place-ships-cont');
         placeShipsScreen.style.display = 'none';
@@ -124,14 +134,15 @@ class DomControl {
     }
 
     static showPlacementHover(cellElem) {
-        // const cellElem = event.target;
-        cellElem.classList.add('placement-hover');
-        // cellElem.style.backgroundColor = 'blue';
+        if (cellElem) {
+            cellElem.classList.add('placement-hover');
+        }
     }
 
     static removePlacementHover(cellElem) {
-        // const cellElem = event.target;
-        cellElem.classList.remove('placement-hover');
+        if (cellElem) {
+            cellElem.classList.remove('placement-hover');
+        }
     }
 
     static updateGameMessage(message) {
@@ -172,6 +183,10 @@ class DomControl {
 
         messageElem.textContent = `${winner.name} wins!`;
         messageCont.appendChild(messageElem);
+    }
+
+    static disableInput() {
+        
     }
 
     // static inputAttack(playerBoard, enemyBoard) {

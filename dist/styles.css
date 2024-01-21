@@ -117,14 +117,32 @@ body {
 .ship {
     display: inline-flex;
     flex: 0;
+    margin: 2px;
 }
 
 .ship-selected {
     border: 2px solid white;
 }
 
+.disabled-selection {
+    pointer-events: none;
+    border: 2px solid gray
+}
+
 .placement-hover {
     background-color: var(--placement-hover);
+}
+
+.options {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.change-orientation {
+    border: 2px solid var(--accent);
+    padding: 5px;
 }
 
 

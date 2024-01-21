@@ -20,11 +20,8 @@ class Game {
         // DomControl.hidePlaceShips();
         // DomControl.showGame();
 
-        this.pOneBoard.placeShip(4, 2, 4, 'horiz');
-        this.pOneBoard.placeShip(1, 2, 2, 'vert');
-        this.pOneBoard.placeShip(9, 5, 4, 'horiz');
-        this.pTwoBoard.placeShip(5, 5, 4, 'horiz');
-        this.pTwoBoard.placeShip(6, 1, 3, 'vert');
+        // this.pTwoBoard.placeShip(5, 5, 4, 'horiz');
+        // this.pTwoBoard.placeShip(6, 1, 3, 'vert');
 
         // DomControl.displayPlayerNames(this.playerOne, this.playerTwo);
         // DomControl.updateDisplay(this.pOneBoard, this.pTwoBoard);
@@ -39,6 +36,7 @@ class Game {
         const game = new Game(name, 'Computer', 10);
 
         await PlaceShips.userPlaceShips(game.pOneBoard);
+        PlaceShips.randomPlaceShips(game.pTwoBoard);
 
         DomControl.showGame();
 
@@ -63,6 +61,7 @@ class Game {
 
     pOneTurn () {
         return new Promise (async resolve => {
+            // DomControl.enableInput();
             DomControl.updateGameMessage(`${this.playerOne.name}'s turn!`);
             const clickedCell = await EventListeners.inputAttack(this.playerOne, this.pTwoBoard);
             
@@ -84,6 +83,7 @@ class Game {
 
     pTwoTurn () {
         return new Promise (async resolve => {
+            // DomControl.disableInput();
             DomControl.updateGameMessage(`${this.playerTwo.name}'s turn!`); 
             
             //In case of a freeze up, re-call the function to keep game running;
