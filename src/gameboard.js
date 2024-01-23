@@ -98,8 +98,7 @@ class GameBoard {
 
     receiveAttack(vertCoord, horzCoord) {
         const coordinate = this.board[vertCoord][horzCoord];
-        // console.log('coordinate: ');
-        // console.log(coordinate);
+        
         if (this.hasShip(vertCoord, horzCoord)) {
             if (coordinate['isCellHit'] === false) {
                 coordinate['isCellHit'] = true;
