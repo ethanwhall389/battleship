@@ -224,3 +224,19 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.ship-exists {
+    background-color: blue;
+}
+
+.cell-miss {
+    background-color: gray;
+}
+
+.cell-hit {
+    background-color: red;
+}
+
+.ship-sunk {
+    background-color: rgb(126, 35, 35);
+}

@@ -32,6 +32,8 @@ CURRENT
 
 --user can start the game without placing any ships.
 
+--user can attack a square that's already been attacked.
+
 FIXED
 --when selecting a ship to place, the ship selections seem to "stack" on each other each time a new one is clicked. This can be seen by looking at the hover coordinates logged to the console.
     --fix

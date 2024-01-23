@@ -74,6 +74,7 @@ class DomControl {
             this.checkShip(cellElem, gameBoard.board[i][j]);
             this.checkMiss(cellElem, gameBoard.board[i][j]);
             this.checkHit(cellElem, gameBoard.board[i][j]);
+            this.checkSunk(cellElem, gameBoard.board[i][j]);
             
             boardElem.appendChild(cellElem);
             }
@@ -92,6 +93,7 @@ class DomControl {
                 
                 this.checkMiss(cellElem, gameBoard.board[i][j]);
                 this.checkHit(cellElem, gameBoard.board[i][j]);
+                this.checkSunk(cellElem, gameBoard.board[i][j]);
 
                 boardElem.appendChild(cellElem);
             }
@@ -100,19 +102,32 @@ class DomControl {
 
     static checkShip(cellElem, coordinate) {
         if (coordinate.ship !== false) {
-            cellElem.style.backgroundColor = 'blue';
+            cellElem.classList.add('ship-exists');
+            // cellElem.style.backgroundColor = 'blue';
         }
     }
 
     static checkMiss(cellElem, coordinate) {
         if (coordinate.isCellMissed === true) {
-            cellElem.style.backgroundColor = 'gray';
+            cellElem.classList.add('cell-miss');
+            // cellElem.style.backgroundColor = 'gray';
         }
     }
 
     static checkHit(cellElem, coordinate) {
         if (coordinate.isCellHit === true) {
-            cellElem.style.backgroundColor = 'red';
+            cellElem.classList.add('cell-hit');
+        }
+    }
+
+    static checkSunk (cellElem, coordinate) {
+        if (coordinate.ship.sunk) {
+            console.log(coordinate.ship);
+            console.log('ship is sunk');
+            cellElem.classList.add('ship-sunk');
+        } else {
+            // console.log('ship is not sunk');
+            // console.log(coordinate.ship);
         }
     }
 
@@ -161,6 +176,8 @@ class DomControl {
         console.log(cell);
         if (cell.isCellMissed) {
             messageElem.textContent = 'Miss!';
+        } else if (cell.isCellHit && cell.ship.sunk) {
+            messageElem.textContent = 'Hit and sunk!';
         } else if (cell.isCellHit) {
             messageElem.textContent = 'Hit!';
         }
