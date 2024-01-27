@@ -34,20 +34,12 @@ class EventListeners {
                     const coordinates = JSON.parse(event.target.getAttribute('data-coordinate'));
                     console.log(coordinates);
 
-                    //stop attack if this cell has already been attacked.
-                    const cell = enemyBoard.board[coordinates[0]][coordinates[1]];
-                    console.log(cell);
-                    if (cell['isCellHit'] === true || cell['isCellMissed'] === true) {
-                        console.log('this cell has already been attacked.');
-                    } else {
-                        // console.log(event.target.getAttribute('data-coordinate'));
-                        player.attack(coordinates[0], coordinates[1], enemyBoard);
-                        // enemyBoard.receiveAttack(coordinates[0], coordinates[1]);
-                        // DomControl.displayTakeShot(this.playerOne);
-                        // DomControl.attackResponseMessage(enemyBoard.board[coordinates[0]][coordinates[1]]);
-                        resolve(enemyBoard.board[coordinates[0]][coordinates[1]]);
-                    }
-
+                    // console.log(event.target.getAttribute('data-coordinate'));
+                    player.attack(coordinates[0], coordinates[1], enemyBoard);
+                    // enemyBoard.receiveAttack(coordinates[0], coordinates[1]);
+                    // DomControl.displayTakeShot(this.playerOne);
+                    // DomControl.attackResponseMessage(enemyBoard.board[coordinates[0]][coordinates[1]]);
+                    resolve(enemyBoard.board[coordinates[0]][coordinates[1]]);
 
                 }
             })

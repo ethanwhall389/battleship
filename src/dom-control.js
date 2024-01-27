@@ -42,6 +42,14 @@ class DomControl {
         elem.classList.add('disabled-selection');
     }
 
+    static disableInput() {
+        document.body.classList.add('user-disabled');
+    }
+   
+    static enableInput() {
+        document.body.classList.remove('user-disabled');
+    }
+
     static hidePlaceShips() {
         const placeShipsScreen = document.querySelector('.place-ships-cont');
         placeShipsScreen.style.display = 'none';
@@ -200,10 +208,6 @@ class DomControl {
 
         messageElem.textContent = `${winner.name} wins!`;
         messageCont.appendChild(messageElem);
-    }
-
-    static disableInput() {
-        
     }
 
     // static inputAttack(playerBoard, enemyBoard) {

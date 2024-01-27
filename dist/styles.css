@@ -36,6 +36,10 @@ body {
     padding: 15px;
 }
 
+.user-disabled {
+    pointer-events: none;
+}
+
 /* HOMESCREEN */
 
 .home-screen {

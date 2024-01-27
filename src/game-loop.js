@@ -62,6 +62,7 @@ class Game {
     pOneTurn () {
         return new Promise (async resolve => {
             // DomControl.enableInput();
+            DomControl.enableInput();
             DomControl.updateGameMessage(`${this.playerOne.name}'s turn!`);
             const clickedCell = await EventListeners.inputAttack(this.playerOne, this.pTwoBoard);
             
@@ -85,6 +86,8 @@ class Game {
         return new Promise (async resolve => {
             // DomControl.disableInput();
             DomControl.updateGameMessage(`${this.playerTwo.name}'s turn!`); 
+            console.log('running disable input---------');
+            DomControl.disableInput();
             
             //In case of a freeze up, re-call the function to keep game running;
             // setTimeout( () => {
