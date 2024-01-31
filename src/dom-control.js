@@ -169,7 +169,8 @@ class DomControl {
     }
 
     static updateGameMessage(message) {
-        const messageElem = document.querySelector('.message');
+        const messageElem = document.createElement('p');
+        messageElem.classList.add('game-message');
         const messageCont = document.querySelector('.message-cont');
         messageElem.textContent = message;
 

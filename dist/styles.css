@@ -229,6 +229,10 @@ body {
     align-items: center;
 }
 
+.game-message {
+    font-size: 25px;
+}
+
 .ship-exists {
     background-color: blue;
 }
