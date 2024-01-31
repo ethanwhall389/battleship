@@ -12,6 +12,8 @@ Nice-to-have implemenations:
 
 --add option for user to randomly generate their ships' layout (easy)
 
+--add a play again button after game over
+
 
 
 
