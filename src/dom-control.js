@@ -210,6 +210,14 @@ class DomControl {
         messageCont.appendChild(messageElem);
     }
 
+    static placeShipsMessage(message) {
+        const messageElem = document.querySelector('.message-cont > .message');
+        messageElem.textContent = message;
+        setTimeout( () => {
+            messageElem.textContent = ''
+        }, 4000);
+    }
+
     // static inputAttack(playerBoard, enemyBoard) {
     //     document.addEventListener('click', (event) => {
     //         if (event.target.classList.contains('board-cell')) {

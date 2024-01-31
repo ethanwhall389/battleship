@@ -22,6 +22,8 @@ class EventListeners {
             completeBttn.addEventListener('click', () => {
                 if (gameBoard.allShipsPlaced()) {
                     resolve();
+                } else {
+                    DomControl.placeShipsMessage('Please place all ships before proceeding.');
                 }
             })
         })
