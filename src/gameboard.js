@@ -6,6 +6,7 @@ class GameBoard {
         this.width = width;
         this.height = height;
         this.board = this.createBoard();
+        this.shipsNum = 0;
     }
 
     // [
@@ -57,6 +58,7 @@ class GameBoard {
                 for (let i = 0; i < length; i++) {
                     this.board[vertCoord][horzCoord+i]['ship'] = ship;
                 }
+                this.shipsNum++;
                 console.log(`Ship placed at ${vertCoord}, ${horzCoord}, ${orientation}, length of ${length}`)
                 return true;
             }
@@ -80,6 +82,7 @@ class GameBoard {
                 for (let i = 0; i < length; i++) {
                     this.board[vertCoord+i][horzCoord]['ship'] = ship;
                 }
+                this.shipsNum++;
                 console.log(`Ship placed at ${vertCoord}, ${horzCoord}, ${orientation}, length of ${length}`)
                 return true;
             }
@@ -145,6 +148,14 @@ class GameBoard {
         }
         //no overlap found
         return false;
+    }
+
+    allShipsPlaced() {
+        if (this.shipsNum === 5) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // placeShip(vertCoord, horzCoord, length, angle) {

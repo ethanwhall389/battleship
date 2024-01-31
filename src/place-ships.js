@@ -8,7 +8,7 @@ class PlaceShips {
             EventListeners.hoverCoordinates();
             EventListeners.selectShip();
             EventListeners.placeShip(gameBoard);
-            await EventListeners.completePlacing();
+            await EventListeners.completePlacing(gameBoard);
             DomControl.hidePlaceShips();
             resolve();
         })

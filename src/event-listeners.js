@@ -16,11 +16,13 @@ class EventListeners {
         })
     }
 
-    static completePlacing() {
+    static completePlacing(gameBoard) {
         return new Promise (resolve => {
             const completeBttn = document.querySelector('.complete-placing');
             completeBttn.addEventListener('click', () => {
-                resolve();
+                if (gameBoard.allShipsPlaced()) {
+                    resolve();
+                }
             })
         })
     }
