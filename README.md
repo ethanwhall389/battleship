@@ -3,9 +3,12 @@
 Needed implementations:
 
 
-Nice-to-have implemenations
+Nice-to-have implemenations:
+
 
 --computer attacks suquentially when it gets a hit.
+
+--Button to start over on placing ships screen
 
 --add option for user to randomly generate their ships' layout (easy)
 
