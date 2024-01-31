@@ -27,15 +27,17 @@ class Player {
             console.log('random coordinate chosen:');
             console.log(enemyBoard.board[randomVertCoord][randomHorzCoord]);
     
-            if (!enemyBoard.board[randomVertCoord][randomHorzCoord].isCellMissed) {
-                if (!enemyBoard.board[randomVertCoord][randomHorzCoord].isCellHit) {
-                    this.attack(randomVertCoord, randomHorzCoord, enemyBoard);
-                    console.log('returned enemy board random cells:');
-                    console.log(enemyBoard.board[randomVertCoord][randomHorzCoord]);
-                    resolve(enemyBoard.board[randomVertCoord][randomHorzCoord]);
-                }
+            if (!enemyBoard.board[randomVertCoord][randomHorzCoord].isCellMissed ||
+                !enemyBoard.board[randomVertCoord][randomHorzCoord].isCellHit) {
+
+                this.attack(randomVertCoord, randomHorzCoord, enemyBoard);
+                console.log('returned enemy board random cells:');
+                console.log(enemyBoard.board[randomVertCoord][randomHorzCoord]);
+                resolve(enemyBoard.board[randomVertCoord][randomHorzCoord]);
+                
             } else {
                 //Keep running random attacks until one satisfies
+                console.log('cell could not be attacked, game may be frozen');
                 this.computerAttack(enemyBoard);
             }
             

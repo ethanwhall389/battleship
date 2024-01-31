@@ -5,6 +5,8 @@ Needed implementations:
 
 Nice-to-have implemenations
 
+--computer attacks suquentially when it gets a hit.
+
 --add option for user to randomly generate their ships' layout (easy)
 
 
@@ -17,8 +19,7 @@ Nice-to-have implemenations
 **Issue Log**
 
 CURRENT
---Every once in a while the computer will freeze while taking it's turn.
-    I think this is caused by an issue in the await statement for the pTwoTurn computer attack. It seems once in a while the promise is never resolved.
+
 
 --user can attack by clicking on a coordinate on their own board, which attacks that coordinate on opponent's board.
 
@@ -26,6 +27,9 @@ CURRENT
 
 
 FIXED
+--Every once in a while the computer will freeze while taking it's turn.
+    I think this is caused by an issue in the await statement for the pTwoTurn computer attack. It seems once in a while the promise is never resolved.
+
 --user can make attacks even when it isn't his turn.
     --fix: Inside the game loop, whenever it's one players turn, run a dom function that disables the other players' ability to input.
 

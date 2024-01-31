@@ -117,6 +117,7 @@ class Game {
     }
 
     endGame (winningPlayer) {
+        DomControl.clearGameMessages();
         DomControl.displayWinner(winningPlayer);
     }
 

@@ -210,6 +210,11 @@ class DomControl {
         messageCont.appendChild(messageElem);
     }
 
+    static clearGameMessages() {
+        const messageCont = document.querySelector('.message-cont');
+        messageCont.textContent = '';
+    }
+
     static placeShipsMessage(message) {
         const messageElem = document.querySelector('.placement-message-cont > .message');
         messageElem.textContent = message;
