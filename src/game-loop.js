@@ -35,7 +35,7 @@ class Game {
         console.log(name);
         const game = new Game(name, 'Computer', 10);
 
-        await PlaceShips.userPlaceShips(game.pOneBoard);
+        await PlaceShips.userPlaceShips(game.pOneBoard, game.playerOne.name);
         PlaceShips.randomPlaceShips(game.pTwoBoard);
 
         DomControl.showGame();

@@ -24,12 +24,15 @@ class DomControl {
         // gameScreen.style.visibility = 'visible';
     }
 
-    static showPlaceShipsScreen(gameBoard) {
+    static showPlaceShipsScreen(gameBoard, playerName) {
         const placeShipsScreen = document.querySelector('.place-ships-cont');
         placeShipsScreen.style.display = 'flex';
 
         const boardElem = document.querySelector('.place-ships-board');
         this.displayPlayerBoard(gameBoard, boardElem);
+
+        const heading = document.querySelector('.place-ships-cont > h1');
+        heading.textContent = `Place your ships, ${playerName}`;
     }
 
     static updatePlaceShipsBoard(gameBoard) {

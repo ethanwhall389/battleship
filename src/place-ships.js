@@ -2,9 +2,9 @@ const DomControl = require('./dom-control');
 const EventListeners = require('./event-listeners');
 
 class PlaceShips {
-    static userPlaceShips(gameBoard) {
+    static userPlaceShips(gameBoard, playerName) {
         return new Promise (async resolve => {
-            DomControl.showPlaceShipsScreen(gameBoard);
+            DomControl.showPlaceShipsScreen(gameBoard, playerName);
             EventListeners.hoverCoordinates();
             EventListeners.selectShip();
             EventListeners.placeShip(gameBoard);
