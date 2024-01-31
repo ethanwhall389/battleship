@@ -35,9 +35,9 @@ class GameBoard {
         // find the coordinate
         // coordinate = our newly made ship
 
-    placeShip(vertCoord, horzCoord, length, orientation) {
+    placeShip(vertCoord, horzCoord, length, orientation, name) {
         // console.log('Ship that is being placed is: ' + length + ' units long');
-        const ship = new Ship('Random', length);
+        const ship = new Ship(name, length);
         console.log('orientation: ' + orientation);
         if (orientation === 'horiz') {
             //check for horiz board overflow

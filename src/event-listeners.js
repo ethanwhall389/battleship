@@ -70,7 +70,7 @@ class EventListeners {
 
     }
 
-    static ship = {length: 0, selectedShipElem: null, orientation: 'x'};
+    static ship = {length: 0, selectedShipElem: null, orientation: 'x', name: null};
 
     static selectShip() {
         
@@ -91,6 +91,8 @@ class EventListeners {
 
                 this.ship.length = this.calcShipLength(selectedShip);
                 this.ship.selectedShipElem = parent;
+                this.ship.name = parent.getAttribute('data');
+                console.log('name set to: ' + this.ship.name);
             })
         })
 
@@ -184,7 +186,7 @@ class EventListeners {
                     } else {
                         orientation = 'vert';
                     }
-                    const success = gameBoard.placeShip(vert, horiz, this.ship.length, orientation);
+                    const success = gameBoard.placeShip(vert, horiz, this.ship.length, orientation, this.ship.name);
                     if (success === true) {
                         DomControl.updatePlaceShipsBoard(gameBoard);
                         DomControl.disableShipSelection(this.ship.selectedShipElem);

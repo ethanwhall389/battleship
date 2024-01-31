@@ -4,6 +4,7 @@ class Ship {
         this.length = length;
         this.hits = 0;
         this.sunk = false;
+        console.log('new ship created named: ' +this.name);
     }
 
     hit(vertCoord, horzCoord) {

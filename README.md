@@ -22,13 +22,14 @@ CURRENT
 
 --user can attack by clicking on a coordinate on their own board, which attacks that coordinate on opponent's board.
 
---user can start the game without placing any ships.
-
 --user can attack a square that's already been attacked.
+
 
 FIXED
 --user can make attacks even when it isn't his turn.
     --fix: Inside the game loop, whenever it's one players turn, run a dom function that disables the other players' ability to input.
+
+--user can start the game without placing any ships.
 
 --when selecting a ship to place, the ship selections seem to "stack" on each other each time a new one is clicked. This can be seen by looking at the hover coordinates logged to the console.
     --fix

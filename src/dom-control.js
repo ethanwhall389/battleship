@@ -185,7 +185,7 @@ class DomControl {
         if (cell.isCellMissed) {
             messageElem.textContent = 'Miss!';
         } else if (cell.isCellHit && cell.ship.sunk) {
-            messageElem.textContent = 'Hit and sunk!';
+            messageElem.textContent = `${cell.ship.name} hit and sunk!`;
         } else if (cell.isCellHit) {
             messageElem.textContent = 'Hit!';
         }
@@ -211,7 +211,7 @@ class DomControl {
     }
 
     static placeShipsMessage(message) {
-        const messageElem = document.querySelector('.message-cont > .message');
+        const messageElem = document.querySelector('.placement-message-cont > .message');
         messageElem.textContent = message;
         setTimeout( () => {
             messageElem.textContent = ''
