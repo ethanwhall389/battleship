@@ -7,7 +7,7 @@ class GameBoard {
         this.height = height;
         this.board = this.createBoard();
         this.shipsNum = 0;
-        this.lastHit = null;
+        this.hits = [];
     }
 
     // [
@@ -38,7 +38,7 @@ class GameBoard {
 
     placeShip(vertCoord, horzCoord, length, orientation, name) {
         // console.log('Ship that is being placed is: ' + length + ' units long');
-        const ship = new Ship(name, length);
+        const ship = new Ship(name, length, orientation);
         console.log('orientation: ' + orientation);
         if (orientation === 'horiz') {
             //check for horiz board overflow
@@ -107,10 +107,7 @@ class GameBoard {
             if (coordinate['isCellHit'] === false) {
                 coordinate['isCellHit'] = true;
                 coordinate['ship'].hit(vertCoord, horzCoord);
-                this.lastHit = [vertCoord, horzCoord];
-                console.log('last hit assigned');
-                console.log(`last hit vert: ${this.lastHit[0]}`);
-                console.log(`typeof coord: ${typeof(this.lastHit[0])}`);
+                this.hits.push([vertCoord, horzCoord]);
             }
         } else if (coordinate['isCellMissed'] === false) {
             coordinate['isCellMissed'] = true;

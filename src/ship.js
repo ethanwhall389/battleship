@@ -1,9 +1,10 @@
 class Ship {
-    constructor(name, length) {
+    constructor(name, length, orientation) {
         this.name = name;
         this.length = length;
         this.hits = 0;
         this.sunk = false;
+        this.axis = orientation;
         console.log('new ship created named: ' +this.name);
     }
 

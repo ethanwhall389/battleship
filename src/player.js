@@ -17,7 +17,9 @@ class Player {
             const smartAttackResult = this.attemptSmartAttack(enemyBoard);
 
             if (smartAttackResult !== null) {
+                console.log('attempting to resolve with smart attack')
                 resolve(smartAttackResult);
+                return;
             }
             //FOR TESTS ONLY-- use below for production
     
@@ -26,7 +28,9 @@ class Player {
             const randomAttackResult = this.randomAttack(enemyBoard);
 
             if (randomAttackResult !== null) {
+                console.log('attempting to resolve with random attack')
                 resolve(randomAttackResult);
+                return;
             }
             
             // const randomHorzCoord = Math.floor(Math.random() * 10);
@@ -60,39 +64,84 @@ class Player {
     }
 
     attemptSmartAttack(enemyBoard) {
-       
-        if (enemyBoard.lastHit !== null) {
-            let vertCoord = enemyBoard.lastHit[0];
-            let horzCoord = enemyBoard.lastHit[1];
+        console.log('attempting smart attack')
+        if (enemyBoard.hits.length > 0) {
+            let vertCoord = enemyBoard.hits[enemyBoard.hits.length - 1][0];
+            let horzCoord = enemyBoard.hits[enemyBoard.hits.length - 1][1];
             const coordinate = enemyBoard.board[vertCoord][horzCoord];
             //if ship is hit but not sunk
             if (!coordinate['ship'].isSunk()) {
+                
                 if (coordinate['ship'].hits > 1) {
                     //attack to one side
+                    
+                    const directionOptions = ['+', '-'];
+                    const randomDirection = directionOptions[Math.floor(Math.random() * 2)]
+
+                    let newHorzCoord;
+                    let newVertCoord;
+
+                    if (coordinate['ship'].axis === 'horiz') {
+                        if (randomDirection === '+') {
+                            newHorzCoord = horzCoord + 1;
+                            newVertCoord = vertCoord; 
+                        } else {
+                            newHorzCoord = horzCoord - 1;
+                            newVertCoord = vertCoord;
+                        } 
+                    }
+                    else if (coordinate['ship'].axis === 'vert') {
+                        if (randomDirection === '+') {
+                            newVertCoord = vertCoord + 1; 
+                            newHorzCoord = horzCoord;
+                        } else {
+                            newVertCoord = vertCoord - 1;
+                            newHorzCoord = horzCoord;
+                        }
+                    }
+
+                    if(this.canBeAttacked(enemyBoard, newVertCoord, newHorzCoord)) {
+                        this.attack(newVertCoord, newHorzCoord, enemyBoard);
+                        return enemyBoard.board[newVertCoord][newHorzCoord];
+                    } else {
+                        enemyBoard.hits.pop();
+                        this.attemptSmartAttack(enemyBoard)
+                    }
+
+
+                    
+                    //save all previous hits in a stack.
+                    //using top hit and hit before, determine which axis to follow
+                        //Randomly choose + or -
+                        //check if chosen cell can be attacked
+                            //Yes? Attack
+                            //No? pop coordinate off of stack and run again 
                 } else {
-                    //attack to any side of hit
+                    //attack to any random side of hit
                     const axisOptions = ['x', 'y'];
                     const directionOptions = ['+', '-'];
 
                     const randomAxis = axisOptions[Math.floor(Math.random() * 2)]
                     const randomDirection = directionOptions[Math.floor(Math.random() * 2)]
 
+                    console.log(`options chosen: ${randomAxis}, ${randomDirection}`);
+
                     let newVertCoord;
                     let newHorzCoord;
-                    if (randomAxis === 'y') {
+                    if (randomAxis === 'x') {
                         if (randomDirection === '+') {
-                            newVertCoord = vertCoord++; 
+                            newVertCoord = vertCoord + 1; 
                             newHorzCoord = horzCoord;
                         } else {
-                            newVertCoord = vertCoord--;
+                            newVertCoord = vertCoord - 1;
                             newHorzCoord = horzCoord;
                         }
-                    } else if (randomAxis === 'x') {
+                    } else if (randomAxis === 'y') {
                         if (randomDirection === '+') {
-                            newHorzCoord = horzCoord++;
+                            newHorzCoord = horzCoord + 1;
                             newVertCoord = vertCoord; 
                         } else {
-                            newHorzCoord = horzCoord--;
+                            newHorzCoord = horzCoord - 1;
                             newVertCoord = vertCoord;
                         }
                     }
@@ -101,13 +150,14 @@ class Player {
                         this.attack(newVertCoord, newHorzCoord, enemyBoard);
                         return enemyBoard.board[newVertCoord][newHorzCoord];
                     } else {
-                        this.attemptSmartAttack();
+                        this.attemptSmartAttack(enemyBoard);
                     }
                     //attack new coordinates
                 }
             }
         }
 
+        console.log('Smart attack uncuccesful');
         return null;
         //store a last hit value in enemy board
 
@@ -119,28 +169,45 @@ class Player {
     }
 
     randomAttack(enemyBoard) {
+        console.log('attempting random attack')
         const randomHorzCoord = Math.floor(Math.random() * 10);
         const randomVertCoord = Math.floor(Math.random() * 10);
+        console.log(`random coordinates chosen: ${randomHorzCoord}, ${randomVertCoord}`);
 
         if (this.canBeAttacked(enemyBoard, randomVertCoord, randomHorzCoord)) {
+            console.log('attacking random coordinate');
             this.attack(randomVertCoord, randomHorzCoord, enemyBoard);
             console.log('returned enemy board random cells:');
             console.log(enemyBoard.board[randomVertCoord][randomHorzCoord]);
             return enemyBoard.board[randomVertCoord][randomHorzCoord];
         } else {
+            console.log('running random attack again');
             this.randomAttack(enemyBoard);
         }
+        console.log('random attack unsuccesful');
         return null;
     }
 
     canBeAttacked(enemyBoard, vertCoord, horzCoord) {
-        if (!enemyBoard.board[vertCoord][horzCoord].isCellMissed ||
-            !enemyBoard.board[vertCoord][horzCoord].isCellHit) {
-            
-            return true;            
-        } else {
+        
+        const cell = enemyBoard.board[vertCoord][horzCoord];
+        if (cell.isCellMissed) {
+            return false;
+        } 
+        else if (cell.isCellHit) {
             return false;
         }
+        else {
+            return true;
+        }
+
+        // if (!enemyBoard.board[vertCoord][horzCoord].isCellMissed ||
+        //     !enemyBoard.board[vertCoord][horzCoord].isCellHit) {
+            
+        //     return true;            
+        // } else {
+        //     return false;
+        // }
     }
 
 
