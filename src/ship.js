@@ -13,12 +13,6 @@ class Ship {
         this.isSunk();
     }
 
-    //WORK on checking for hits
-    hitExists(hitsArray, vertCoord, horzCoord) {
-        hitsArray.some(arr => {
-
-        })
-    }
 
     isSunk() {
         if (this.hits < this.length) {

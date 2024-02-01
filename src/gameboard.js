@@ -7,6 +7,7 @@ class GameBoard {
         this.height = height;
         this.board = this.createBoard();
         this.shipsNum = 0;
+        this.lastHit = null;
     }
 
     // [
@@ -106,6 +107,10 @@ class GameBoard {
             if (coordinate['isCellHit'] === false) {
                 coordinate['isCellHit'] = true;
                 coordinate['ship'].hit(vertCoord, horzCoord);
+                this.lastHit = [vertCoord, horzCoord];
+                console.log('last hit assigned');
+                console.log(`last hit vert: ${this.lastHit[0]}`);
+                console.log(`typeof coord: ${typeof(this.lastHit[0])}`);
             }
         } else if (coordinate['isCellMissed'] === false) {
             coordinate['isCellMissed'] = true;
@@ -124,6 +129,13 @@ class GameBoard {
             }
         }
         return true;
+    }
+
+    hasUnsunkHit(coordinate) {
+        if (coordinate['hit'] === true && coordinate['sunk'] === false) {
+            return true;
+        }
+        return false;
     }
 
     checkHorizOverlap(vertCoord, horzCoord, shipLength) {

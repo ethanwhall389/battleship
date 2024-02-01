@@ -89,10 +89,6 @@ class Game {
             console.log('running disable input---------');
             DomControl.disableInput();
             
-            //In case of a freeze up, re-call the function to keep game running;
-            // setTimeout( () => {
-            //     this.pTwoTurn();
-            // }, 3000);
             
             const clickedCell = await this.playerTwo.computerAttack(this.pOneBoard);
             console.log('clicked cell:')

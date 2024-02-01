@@ -6,7 +6,7 @@ Needed implementations:
 Nice-to-have implemenations:
 
 
---computer attacks suquentially when it gets a hit.
+--computer attacks sequentially when it gets a hit.
 
 --Button to start over on placing ships screen
 
