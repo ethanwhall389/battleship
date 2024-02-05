@@ -31,6 +31,8 @@ class Player {
                 console.log('attempting to resolve with random attack')
                 resolve(randomAttackResult);
                 return;
+            } else {
+                console.log('Random attack DID return null, now we are frozen');
             }
             
             // const randomHorzCoord = Math.floor(Math.random() * 10);
@@ -104,8 +106,11 @@ class Player {
                         this.attack(newVertCoord, newHorzCoord, enemyBoard);
                         return enemyBoard.board[newVertCoord][newHorzCoord];
                     } else {
-                        enemyBoard.hits.pop();
-                        this.attemptSmartAttack(enemyBoard)
+                        //if there are any attackable cells adjacent, do not pop. Otherwise, do.
+                        if (!this.checkAdjacentAttackable(enemyBoard, vertCoord, horzCoord)) {
+                            enemyBoard.hits.pop();
+                        }
+                        return this.attemptSmartAttack(enemyBoard)
                     }
 
 
@@ -150,7 +155,7 @@ class Player {
                         this.attack(newVertCoord, newHorzCoord, enemyBoard);
                         return enemyBoard.board[newVertCoord][newHorzCoord];
                     } else {
-                        this.attemptSmartAttack(enemyBoard);
+                        return this.attemptSmartAttack(enemyBoard);
                     }
                     //attack new coordinates
                 }
@@ -182,8 +187,9 @@ class Player {
             return enemyBoard.board[randomVertCoord][randomHorzCoord];
         } else {
             console.log('running random attack again');
-            this.randomAttack(enemyBoard);
+            return this.randomAttack(enemyBoard);
         }
+        
         console.log('random attack unsuccesful');
         return null;
     }
@@ -208,6 +214,25 @@ class Player {
         // } else {
         //     return false;
         // }
+    }
+
+    checkAdjacentAttackable(enemyBoard, vertCoord, horzCoord) {
+        const coordinate = enemyBoard.board[vertCoord][horzCoord];
+
+        if (coordinate['ship'].axis === 'vert') {
+            if (this.canBeAttacked(enemyBoard, vertCoord+1, horzCoord)) {
+                return true;
+            } else if (this.canBeAttacked(enemyBoard, vertCoord-1, horzCoord)) {
+                return true;
+            }
+        } else {
+            if (this.canBeAttacked(enemyBoard, vertCoord, horzCoord+1)) {
+                return true;
+            } else if (this.canBeAttacked(enemyBoard, vertCoord, horzCoord-1)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
