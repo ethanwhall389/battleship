@@ -13,26 +13,11 @@ class Game {
 
         this.pOneBoard = new GameBoard(this.dimensions, this.dimensions);
         this.pTwoBoard = new GameBoard(this.dimensions, this.dimensions);
-
-        // this.userPlaceShips(this.pOneBoard);
-        // this.computerPlaceShips(this.pTwoBoard);
-
-        // DomControl.hidePlaceShips();
-        // DomControl.showGame();
-
-        // this.pTwoBoard.placeShip(5, 5, 4, 'horiz');
-        // this.pTwoBoard.placeShip(6, 1, 3, 'vert');
-
-        // DomControl.displayPlayerNames(this.playerOne, this.playerTwo);
-        // DomControl.updateDisplay(this.pOneBoard, this.pTwoBoard);
-        // EventListeners.hoverCoordinates();
-        // this.gameLoop();
     }
 
     static async startGame() {
         //show name screen, await name input
         const name = await EventListeners.startGame();
-        console.log(name);
         const game = new Game(name, 'Computer', 10);
 
         await PlaceShips.userPlaceShips(game.pOneBoard, game.playerOne.name);
@@ -47,21 +32,9 @@ class Game {
 
     }
 
-    // userPlaceShips(gameBoard) {
-    //     return new Promise (async resolve => {
-    //         DomControl.showPlaceShipsScreen(gameBoard);
-    //         EventListeners.hoverCoordinates();
-    //         await EventListeners.completePlacing();
-    //         resolve();
-    //         // setTimeout( () => {
-    //         //     resolve();
-    //         // }, 10000);
-    //     })
-    // }
 
     pOneTurn () {
         return new Promise (async resolve => {
-            // DomControl.enableInput();
             DomControl.enableInput();
             DomControl.updateGameMessage(`${this.playerOne.name}'s turn!`);
             const clickedCell = await EventListeners.inputAttack(this.playerOne, this.pTwoBoard);
@@ -84,17 +57,12 @@ class Game {
 
     pTwoTurn () {
         return new Promise (async resolve => {
-            // DomControl.disableInput();
             DomControl.updateGameMessage(`${this.playerTwo.name}'s turn!`); 
-            console.log('running disable input---------');
             DomControl.disableInput();
             
             
             const clickedCell = await this.playerTwo.computerAttack(this.pOneBoard);
-            console.log('clicked cell:')
-            console.log(clickedCell);
 
-            // const clickedCell = await EventListeners.inputAttack(this.pOneBoard);
             setTimeout( () => {
                 DomControl.displayTakeShot(this.playerTwo);
             }, 1000);
@@ -144,22 +112,11 @@ class Game {
 
 
 
-// const name = EventListeners.startGame();
-
-// console.log(name);
-
-// new Game(name, 'Computer', 10);
 
 Game.startGame();
 
 
 
-// DomControl.displayPlayerNames(game.playerOne, game.playerTwo);
-// DomControl.updateDisplay(game.pOneBoard, game.pTwoBoard);
-
-
-// EventListeners.inputAttack(game.pOneBoard, game.pTwoBoard);
-// EventListeners.hoverCoordinates(game.pOneBoard);
 
 
 

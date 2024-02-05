@@ -1,8 +1,4 @@
 class DomControl {
-    // constructor() {
-    //     this.playerBoardElem = document.querySelector('.player-board');
-    //     this.enemyBoardElem = document.querySelector('.enemy-board');
-    // }
 
     static updateDisplay(pOneBoard, pTwoBoard) {
         const playerBoardElem = document.querySelector('.player-board');
@@ -17,11 +13,8 @@ class DomControl {
 
     static hideHomeScreen() {
         const homeScreen = document.querySelector('.home-screen');
-        // const gameScreen = document.querySelector('.game');
 
         homeScreen.style.display = 'none';
-        // gameScreen.style.display = 'block';
-        // gameScreen.style.visibility = 'visible';
     }
 
     static showPlaceShipsScreen(gameBoard, playerName) {
@@ -78,7 +71,6 @@ class DomControl {
             const cellElem = document.createElement('div');
             cellElem.classList.add('board-cell');
             cellElem.setAttribute('data-coordinate', `[${i}, ${j}]`)
-            // console.log(boardElem.offsetWidth);
             cellElem.style.width = `${boardElem.clientWidth / gameBoard.width}px`;
             cellElem.style.height = `${boardElem.clientHeight / gameBoard.height}px`;
             
@@ -114,14 +106,12 @@ class DomControl {
     static checkShip(cellElem, coordinate) {
         if (coordinate.ship !== false) {
             cellElem.classList.add('ship-exists');
-            // cellElem.style.backgroundColor = 'blue';
         }
     }
 
     static checkMiss(cellElem, coordinate) {
         if (coordinate.isCellMissed === true) {
             cellElem.classList.add('cell-miss');
-            // cellElem.style.backgroundColor = 'gray';
         }
     }
 
@@ -133,21 +123,14 @@ class DomControl {
 
     static checkSunk (cellElem, coordinate) {
         if (coordinate.ship.sunk) {
-            console.log(coordinate.ship);
-            console.log('ship is sunk');
             cellElem.classList.add('ship-sunk');
         } else {
-            // console.log('ship is not sunk');
-            // console.log(coordinate.ship);
+            return;
         }
     }
 
     static showCoordinate(event) {
         const cellElem = event.target;
-        // const coordElem = document.createElement('p');
-        // coordElem.textContent = event.target.getAttribute('data-coordinate');
-
-        // cellElem.appendChild(coordElem);
         const coord = JSON.parse(event.target.getAttribute('data-coordinate'));
         const coordText = `${coord[0]},${coord[1]}`
 
@@ -184,8 +167,6 @@ class DomControl {
     static attackResponseMessage (cell) {
         const messageElem = document.createElement('p');
         const messageCont = document.querySelector('.message-cont');
-        console.log('cell: ');
-        console.log(cell);
         if (cell.isCellMissed) {
             messageElem.textContent = 'Miss!';
         } else if (cell.isCellHit && cell.ship.sunk) {
@@ -194,7 +175,6 @@ class DomControl {
             messageElem.textContent = 'Hit!';
         }
 
-        console.log(messageElem.textContent);
         messageCont.appendChild(messageElem);
     }
 
@@ -226,19 +206,6 @@ class DomControl {
             messageElem.textContent = ''
         }, 4000);
     }
-
-    // static inputAttack(playerBoard, enemyBoard) {
-    //     document.addEventListener('click', (event) => {
-    //         if (event.target.classList.contains('board-cell')) {
-    //             // console.log(event.target.getAttribute('data-coordinate'));
-    //             const coordinates = JSON.parse(event.target.getAttribute('data-coordinate'));
-    //             console.log(coordinates);
-    //             console.log(enemyBoard.board[coordinates[0], coordinates[1]]);
-    //             enemyBoard.receiveAttack(coordinates[0], coordinates[1]);
-    //             this.updateDisplay(playerBoard, enemyBoard);
-    //         }
-    //     })
-    // }
 }
 
 

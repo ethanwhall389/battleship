@@ -23,14 +23,11 @@ class PlaceShips {
             const randomVert = Math.floor(Math.random() * 9) + 1;
             const randomHorz = Math.floor(Math.random() * 9) + 1;
             const randomOrient = Math.round(Math.random()); 
-            console.log('random orientation chosen: ' + orientOptions[randomOrient]);   
             const success = gameBoard.placeShip(randomVert, randomHorz, shipLengths[0], orientOptions[randomOrient], shipNames[0]);
             if (success === true) {
-                console.log('ship placed');
                 shipLengths.shift();
                 shipNames.shift();
             } else {
-                console.log('ship not placed');
             }
         }
     }

@@ -36,13 +36,8 @@ class EventListeners {
                 if (event.target.classList.contains('board-cell')) {
 
                     const coordinates = JSON.parse(event.target.getAttribute('data-coordinate'));
-                    console.log(coordinates);
 
-                    // console.log(event.target.getAttribute('data-coordinate'));
                     player.attack(coordinates[0], coordinates[1], enemyBoard);
-                    // enemyBoard.receiveAttack(coordinates[0], coordinates[1]);
-                    // DomControl.displayTakeShot(this.playerOne);
-                    // DomControl.attackResponseMessage(enemyBoard.board[coordinates[0]][coordinates[1]]);
                     resolve(enemyBoard.board[coordinates[0]][coordinates[1]]);
 
                 }
@@ -52,7 +47,6 @@ class EventListeners {
     }
 
     static hoverCoordinates(enemyBoard) {
-        // const boardsCont = document.querySelector('.boards-main-cont');
         const boardsCont = document.querySelectorAll('.board-cont');
         boardsCont.forEach(board => {
             board.addEventListener('mouseover', (event) => {
@@ -92,7 +86,6 @@ class EventListeners {
                 this.ship.length = this.calcShipLength(selectedShip);
                 this.ship.selectedShipElem = parent;
                 this.ship.name = parent.getAttribute('data');
-                console.log('name set to: ' + this.ship.name);
             })
         })
 
@@ -159,9 +152,6 @@ class EventListeners {
                     const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0] + i}, ${currentCoord[1]}]']`);
                     DomControl.removePlacementHover(cellElem);
                 }
-                
-                // const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0]}, ${currentCoord[1] + i}]']`);
-                // DomControl.removePlacementHover(cellElem);
             }
         }
     }

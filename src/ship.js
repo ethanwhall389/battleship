@@ -5,12 +5,10 @@ class Ship {
         this.hits = 0;
         this.sunk = false;
         this.axis = orientation;
-        console.log('new ship created named: ' +this.name);
     }
 
     hit(vertCoord, horzCoord) {
         this.hits++;
-        // this.hits.push([vertCoord, horzCoord]);
         this.isSunk();
     }
 
