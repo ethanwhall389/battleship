@@ -83,6 +83,7 @@ class Game {
     endGame (winningPlayer) {
         DomControl.clearGameMessages();
         DomControl.displayWinner(winningPlayer);
+        DomControl.displayAllShips(this.pOneBoard, this.pTwoBoard);
     }
 
     async gameLoop () {
