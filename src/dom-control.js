@@ -103,6 +103,18 @@ class DomControl {
         }
     }
 
+    static displayAllShips(pOneBoard, pTwoBoard) {
+        const playerBoardElem = document.querySelector('.player-board');
+        const enemyBoardElem = document.querySelector('.enemy-board');
+
+        playerBoardElem.textContent = '';
+        enemyBoardElem.textContent = '';
+
+        this.displayPlayerBoard(pOneBoard, playerBoardElem);
+        this.displayPlayerBoard(pTwoBoard, enemyBoardElem);
+
+    }
+
     static checkShip(cellElem, coordinate) {
         if (coordinate.ship !== false) {
             cellElem.classList.add('ship-exists');
