@@ -5,8 +5,8 @@ const EventListeners = require('./components/event-listeners');
 const PlaceShips = require('./components/place-ships');
 
 class Game {
-    constructor(pOneName, pTwoName, dimensions) {
-        this.dimensions = dimensions;
+    constructor(pOneName, pTwoName, boardDimensions) {
+        this.dimensions = boardDimensions;
 
         this.playerOne = new Player(pOneName);
         this.playerTwo = new Player(pTwoName);
@@ -17,8 +17,8 @@ class Game {
 
     static async startGame() {
         //show name screen, await name input
-        const name = await EventListeners.startGame();
-        const game = new Game(name, 'Computer', 10);
+        const playerName = await EventListeners.startGame();
+        const game = new Game(playerName, 'Computer', 10);
 
         await PlaceShips.userPlaceShips(game.pOneBoard, game.playerOne.name);
         PlaceShips.randomPlaceShips(game.pTwoBoard);
@@ -32,6 +32,29 @@ class Game {
 
     }
 
+    async gameLoop () {
+        //Player one turn
+        await this.pOneTurn();
+
+        //check for win
+        if (this.pTwoBoard.allShipsSunk()) {
+            this.endGame(this.playerOne);
+            return;
+        }
+
+        //player two turn
+        await this.pTwoTurn();
+
+        //check for win
+        if (this.pOneBoard.allShipsSunk()) {
+            this.endGame(this.playerTwo);
+            return;
+        }
+
+        //if no win, recursive call gameLoop
+        this.gameLoop();
+    }
+
 
     pOneTurn () {
         return new Promise (async resolve => {
@@ -41,8 +64,7 @@ class Game {
             
             DomControl.displayTakeShot(this.playerOne);
             
-            setTimeout( () => {
-                
+            setTimeout( () => {  
                 DomControl.attackResponseMessage(clickedCell);
                 DomControl.updateDisplay(this.pOneBoard, this.pTwoBoard);
                 
@@ -86,29 +108,7 @@ class Game {
         DomControl.displayAllShips(this.pOneBoard, this.pTwoBoard);
     }
 
-    async gameLoop () {
-        //Player one turn
-        await this.pOneTurn();
-
-        //check for win
-        if (this.pTwoBoard.allShipsSunk()) {
-            this.endGame(this.playerOne);
-            return;
-        }
-
-        //player two turn
-        await this.pTwoTurn();
-
-        //check for win
-        if (this.pOneBoard.allShipsSunk()) {
-            this.endGame(this.playerTwo);
-            return;
-        }
-
-
-        //if no win, recursive call gameLoop
-        this.gameLoop();
-    }
+    
 }
 
 
