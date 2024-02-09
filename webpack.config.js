@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/game-loop.js',
+  entry: './src/game.js',
   mode: 'development',
   output: {
     filename: 'main.js',
