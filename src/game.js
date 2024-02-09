@@ -1,8 +1,8 @@
-const Player = require('./player');
-const GameBoard = require('./gameboard');
-const DomControl = require('./dom-control');
-const EventListeners = require('./event-listeners');
-const PlaceShips = require('./place-ships');
+const Player = require('./components/player');
+const GameBoard = require('./components/gameboard');
+const DomControl = require('./components/dom-control');
+const EventListeners = require('./components/event-listeners');
+const PlaceShips = require('./components/place-ships');
 
 class Game {
     constructor(pOneName, pTwoName, dimensions) {
