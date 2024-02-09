@@ -272,3 +272,25 @@ body {
 .ship-sunk {
     background-color: rgb(126, 35, 35);
 }
+
+@media screen and (max-width: 900px) {
+    .boards-main-cont {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .placement-cont {
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .options {
+        width: 100%;
+        justify-content: center;
+        gap: 15px;
+        flex: 1;
+        display: flex;
+
+    }
+}
