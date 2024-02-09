@@ -7,7 +7,7 @@ class Ship {
         this.axis = orientation;
     }
 
-    hit(vertCoord, horzCoord) {
+    hit() {
         this.hits++;
         this.isSunk();
     }

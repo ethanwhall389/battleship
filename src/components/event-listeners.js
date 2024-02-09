@@ -46,8 +46,9 @@ class EventListeners {
         })
     }
 
-    static hoverCoordinates(enemyBoard) {
+    static hoverCoordinates() {
         const boardsCont = document.querySelectorAll('.board-cont');
+        
         boardsCont.forEach(board => {
             board.addEventListener('mouseover', (event) => {
                 if (event.target.classList.contains('board-cell')) {
@@ -64,7 +65,7 @@ class EventListeners {
 
     }
 
-    static ship = {length: 0, selectedShipElem: null, orientation: 'x', name: null};
+    static selectedShip = {length: 0, selectedShipElem: null, orientation: 'x', name: null};
 
     static selectShip() {
         
@@ -83,9 +84,9 @@ class EventListeners {
                 const parent = event.target.parentNode;
                 const selectedShip = parent.getAttribute('data');
 
-                this.ship.length = this.calcShipLength(selectedShip);
-                this.ship.selectedShipElem = parent;
-                this.ship.name = parent.getAttribute('data');
+                this.selectedShip.length = this.calcShipLength(selectedShip);
+                this.selectedShip.selectedShipElem = parent;
+                this.selectedShip.name = parent.getAttribute('data');
             })
         })
 
@@ -98,11 +99,11 @@ class EventListeners {
                 if (event.target.getAttribute('data-axis') === 'x') {
                     event.target.setAttribute('data-axis', 'y');
                     event.target.textContent = 'Place on Y axis';
-                    this.ship.orientation = 'y';
+                    this.selectedShip.orientation = 'y';
                 } else {
                     event.target.setAttribute('data-axis', 'x');
                     event.target.textContent = 'Place on X axis';
-                    this.ship.orientation = 'x';
+                    this.selectedShip.orientation = 'x';
                 }
             }
         })
@@ -124,15 +125,21 @@ class EventListeners {
         return shipLength;
     }
 
+    static addHoverEvents() {
+        const boardCont = document.querySelector('.placement-board-cont');
+        boardCont.addEventListener('mouseover', event =>  this.mouseOverHandler(event));
+        boardCont.addEventListener('mouseout', event => this.mouseOutHandler(event));
+    }
+
     static mouseOverHandler = (event) => {
-        const shipLength = this.ship.length;
+        const shipLength = this.selectedShip.length;
         if (event.target.classList.contains('board-cell')) {
             const currentCoord = JSON.parse(event.target.getAttribute('data-coordinate'));
             for (let i = 0; i < shipLength; i++) {
-                if (this.ship.orientation === 'x') {
+                if (this.selectedShip.orientation === 'x') {
                     const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0]}, ${currentCoord[1] + i}]']`);
                     DomControl.showPlacementHover(cellElem);
-                } else if (this.ship.orientation === 'y') {
+                } else if (this.selectedShip.orientation === 'y') {
                     const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0] + i}, ${currentCoord[1]}]']`);
                     DomControl.showPlacementHover(cellElem);
                 }
@@ -141,14 +148,14 @@ class EventListeners {
     }
 
     static mouseOutHandler = (event) => {
-        const shipLength = this.ship.length; 
+        const shipLength = this.selectedShip.length; 
         if (event.target.classList.contains('board-cell')) {
             const currentCoord = JSON.parse(event.target.getAttribute('data-coordinate'));
             for (let i = 0; i < shipLength; i++) {
-                if (this.ship.orientation === 'x') {
+                if (this.selectedShip.orientation === 'x') {
                     const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0]}, ${currentCoord[1] + i}]']`);
                     DomControl.removePlacementHover(cellElem);
-                } else if (this.ship.orientation === 'y') {
+                } else if (this.selectedShip.orientation === 'y') {
                     const cellElem = document.querySelector(`[data-coordinate='[${currentCoord[0] + i}, ${currentCoord[1]}]']`);
                     DomControl.removePlacementHover(cellElem);
                 }
@@ -156,31 +163,27 @@ class EventListeners {
         }
     }
     
-    static addHoverEvents(shipLength) {
-        const boardCont = document.querySelector('.placement-board-cont');
-        boardCont.addEventListener('mouseover', event =>  this.mouseOverHandler(event));
-        boardCont.addEventListener('mouseout', event => this.mouseOutHandler(event));
-    }
+    
 
     static placeShip(gameBoard) {
         const boardCont = document.querySelector('.placement-board-cont');
         boardCont.addEventListener('click', (event) => {
             if (event.target.classList.contains('board-cell')) {
-                if (this.ship.length !== 0) {
+                if (this.selectedShip.length !== 0) {
                     const currentCoord = JSON.parse(event.target.getAttribute('data-coordinate'));
-                    const vert = currentCoord[0];
-                    const horiz = currentCoord[1];
-                    let orientation = '';
-                    if (this.ship.orientation === 'x') {
-                        orientation = 'horiz';
-                    } else {
-                        orientation = 'vert';
-                    }
-                    const success = gameBoard.placeShip(vert, horiz, this.ship.length, orientation, this.ship.name);
+                    const yCoord = currentCoord[0];
+                    const xCoord = currentCoord[1];
+                    // let orientation = '';
+                    // if (this.selectedShip.orientation === 'x') {
+                    //     orientation = 'horiz';
+                    // } else {
+                    //     orientation = 'vert';
+                    // }
+                    const success = gameBoard.placeShip(xCoord, yCoord, this.selectedShip.length, this.selectedShip.orientation, this.selectedShip.name);
                     if (success === true) {
                         DomControl.updatePlaceShipsBoard(gameBoard);
-                        DomControl.disableShipSelection(this.ship.selectedShipElem);
-                        this.ship.length = 0;
+                        DomControl.disableShipSelection(this.selectedShip.selectedShipElem);
+                        this.selectedShip.length = 0;
                     }
                 }
             }

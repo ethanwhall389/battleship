@@ -1,175 +1,172 @@
-const GameBoard = require('./gameboard');
+const SmartAttack = require('./smart-attack');
 
 class Player {
     constructor(name) {
         this.name = name;
     }
 
-    attack(vertCoord, horzCoord, enemyBoard) {
-        enemyBoard.receiveAttack(vertCoord, horzCoord);
+    attack(yCoord, xCoord, enemyBoard) {
+        enemyBoard.receiveAttack(yCoord, xCoord);
     }
 
     computerAttack(enemyBoard) {
         return new Promise ( resolve => {
 
             
-            const smartAttackResult = this.attemptSmartAttack(enemyBoard);
+            const smartAttackResult = SmartAttack.attemptSmartAttack(enemyBoard);
 
             if (smartAttackResult !== null) {
                 resolve(smartAttackResult);
                 return;
             }
-            //FOR TESTS ONLY-- use below for production
-    
-            // const randomVertCoord = Math.floor(Math.random() * 3);
-            // const randomHorzCoord = Math.floor(Math.random() * 3);
+
             const randomAttackResult = this.randomAttack(enemyBoard);
 
             if (randomAttackResult !== null) {
                 resolve(randomAttackResult);
                 return;
-            } else {
             }
 
         })
 
     }
 
-    attemptSmartAttack(enemyBoard) {
-        if (enemyBoard.hits.length > 0) {
-            let vertCoord = enemyBoard.hits[enemyBoard.hits.length - 1][0];
-            let horzCoord = enemyBoard.hits[enemyBoard.hits.length - 1][1];
-            const coordinate = enemyBoard.board[vertCoord][horzCoord];
-            
-            //if ship is hit but not sunk
-            if (!coordinate['ship'].isSunk()) {
-                
-                if (coordinate['ship'].hits > 1) {
-                    //attack to one side
-                    
-                    const directionOptions = ['+', '-'];
-                    const randomDirection = directionOptions[Math.floor(Math.random() * 2)]
-
-                    let newHorzCoord;
-                    let newVertCoord;
-
-                    if (coordinate['ship'].axis === 'horiz') {
-                        if (randomDirection === '+') {
-                            newHorzCoord = horzCoord + 1;
-                            newVertCoord = vertCoord; 
-                        } else {
-                            newHorzCoord = horzCoord - 1;
-                            newVertCoord = vertCoord;
-                        } 
-                    }
-                    else if (coordinate['ship'].axis === 'vert') {
-                        if (randomDirection === '+') {
-                            newVertCoord = vertCoord + 1; 
-                            newHorzCoord = horzCoord;
-                        } else {
-                            newVertCoord = vertCoord - 1;
-                            newHorzCoord = horzCoord;
-                        }
-                    }
-
-                    if(this.canBeAttacked(enemyBoard, newVertCoord, newHorzCoord)) {
-                        this.attack(newVertCoord, newHorzCoord, enemyBoard);
-                        return enemyBoard.board[newVertCoord][newHorzCoord];
-                    } else {
-                        //if there are any attackable cells adjacent, do not pop. Otherwise, do.
-                        if (!this.checkAdjacentAttackable(enemyBoard, vertCoord, horzCoord)) {
-                            enemyBoard.hits.pop();
-                        }
-                        return this.attemptSmartAttack(enemyBoard)
-                    }
-
-
-                } else {
-                    //attack to any random side of hit
-                    const axisOptions = ['x', 'y'];
-                    const directionOptions = ['+', '-'];
-
-                    const randomAxis = axisOptions[Math.floor(Math.random() * 2)]
-                    const randomDirection = directionOptions[Math.floor(Math.random() * 2)]
-
-                    let newVertCoord;
-                    let newHorzCoord;
-                    if (randomAxis === 'x') {
-                        if (randomDirection === '+') {
-                            newVertCoord = vertCoord + 1; 
-                            newHorzCoord = horzCoord;
-                        } else {
-                            newVertCoord = vertCoord - 1;
-                            newHorzCoord = horzCoord;
-                        }
-                    } else if (randomAxis === 'y') {
-                        if (randomDirection === '+') {
-                            newHorzCoord = horzCoord + 1;
-                            newVertCoord = vertCoord; 
-                        } else {
-                            newHorzCoord = horzCoord - 1;
-                            newVertCoord = vertCoord;
-                        }
-                    }
-
-                    if (this.canBeAttacked(enemyBoard, newVertCoord, newHorzCoord)) {
-                        this.attack(newVertCoord, newHorzCoord, enemyBoard);
-                        return enemyBoard.board[newVertCoord][newHorzCoord];
-                    } else {
-                        return this.attemptSmartAttack(enemyBoard);
-                    }
-                }
-            }
-        }
-
-        //smart attack unsuccesful
-        return null;
-    }
-
     randomAttack(enemyBoard) {
-        const randomHorzCoord = Math.floor(Math.random() * 10);
-        const randomVertCoord = Math.floor(Math.random() * 10);
+        const randomxCoord = Math.floor(Math.random() * 10);
+        const randomyCoord = Math.floor(Math.random() * 10);
 
-        if (this.canBeAttacked(enemyBoard, randomVertCoord, randomHorzCoord)) {
-            this.attack(randomVertCoord, randomHorzCoord, enemyBoard);
-            return enemyBoard.board[randomVertCoord][randomHorzCoord];
+        if (SmartAttack.canBeAttacked(enemyBoard, randomyCoord, randomxCoord)) {
+            this.attack(randomyCoord, randomxCoord, enemyBoard);
+            return enemyBoard.board[randomyCoord][randomxCoord];
         } else {
             return this.randomAttack(enemyBoard);
         }
     }
 
-    canBeAttacked(enemyBoard, vertCoord, horzCoord) {
+    // attemptSmartAttack(enemyBoard) {
+    //     if(enemyBoard.hits.length === 0) {
+    //         //no hits, no smart attack possible
+    //         return null;
+    //     }
         
-        const cell = enemyBoard.board[vertCoord][horzCoord];
-        if (cell.isCellMissed) {
-            return false;
-        } 
-        else if (cell.isCellHit) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
+    //     let yCoord = enemyBoard.hits[enemyBoard.hits.length - 1][0];
+    //     let xCoord = enemyBoard.hits[enemyBoard.hits.length - 1][1];
+    //     const coordinate = enemyBoard.board[yCoord][xCoord];
+        
+    //     if (!coordinate['ship'].isSunk()) { //if ship is hit but not sunk
+            
+    //         if (coordinate['ship'].hits > 1) {
+    //             return this.attackAdjacentCell(enemyBoard, yCoord, xCoord)
+    //         } else {
+    //             return this.attackRandomSide(enemyBoard, yCoord, xCoord);
+    //         }
+    //     }
 
-    checkAdjacentAttackable(enemyBoard, vertCoord, horzCoord) {
-        const coordinate = enemyBoard.board[vertCoord][horzCoord];
+    //     return null; //smart attack unsuccesful
 
-        if (coordinate['ship'].axis === 'vert') {
-            if (this.canBeAttacked(enemyBoard, vertCoord+1, horzCoord)) {
-                return true;
-            } else if (this.canBeAttacked(enemyBoard, vertCoord-1, horzCoord)) {
-                return true;
-            }
-        } else {
-            if (this.canBeAttacked(enemyBoard, vertCoord, horzCoord+1)) {
-                return true;
-            } else if (this.canBeAttacked(enemyBoard, vertCoord, horzCoord-1)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    // }
+
+    // attackAdjacentCell(enemyBoard, yCoord, xCoord) {
+    //     const directionOptions = ['+', '-'];
+    //     const randomDirection = directionOptions[Math.floor(Math.random() * 2)]
+    //     const axis = enemyBoard.board[yCoord][xCoord]['ship'].axis;
+
+    //     let newXCoord = xCoord;
+    //     let newYCoord = yCoord;
+
+    //     if (axis === 'x') {
+    //         if (randomDirection === '+') {
+    //             newXCoord = xCoord + 1;
+    //         } else {
+    //             newXCoord = xCoord - 1;
+    //         } 
+    //     }
+    //     else if (axis === 'y') {
+    //         if (randomDirection === '+') {
+    //             newYCoord = yCoord + 1; 
+    //         } else {
+    //             newYCoord = yCoord - 1;
+    //         }
+    //     }
+
+    //     if(this.canBeAttacked(enemyBoard, newYCoord, newXCoord)) {
+    //         this.attack(newYCoord, newXCoord, enemyBoard);
+    //         return enemyBoard.board[newYCoord][newXCoord];
+    //     } else {
+    //         //if there are any attackable cells adjacent, do not pop. Otherwise, do.
+    //         if (!this.checkAdjacentAttackable(enemyBoard, yCoord, xCoord)) {
+    //             enemyBoard.hits.pop();
+    //         }
+    //         return this.attemptSmartAttack(enemyBoard)
+    //     }
+    // }
+
+    // attackRandomSide(enemyBoard, yCoord, xCoord) {
+    //     //attack to any random side of hit
+    //     const axisOptions = ['x', 'y'];
+    //     const directionOptions = ['+', '-'];
+
+    //     const randomAxis = axisOptions[Math.floor(Math.random() * 2)]
+    //     const randomDirection = directionOptions[Math.floor(Math.random() * 2)]
+
+    //     let newYCoord = yCoord;
+    //     let newXCoord = xCoord;
+    //     if (randomAxis === 'x') {
+    //         if (randomDirection === '+') {
+    //             newYCoord = yCoord + 1; 
+    //         } else {
+    //             newYCoord = yCoord - 1;
+    //         }
+    //     } else if (randomAxis === 'y') {
+    //         if (randomDirection === '+') {
+    //             newXCoord = xCoord + 1;
+    //         } else {
+    //             newXCoord = xCoord - 1;
+    //         }
+    //     }
+
+    //     if (this.canBeAttacked(enemyBoard, newYCoord, newXCoord)) {
+    //         this.attack(newYCoord, newXCoord, enemyBoard);
+    //         return enemyBoard.board[newYCoord][newXCoord];
+    //     } else {
+    //         return this.attemptSmartAttack(enemyBoard);
+    //     }
+    // }
+
+    
+
+    // canBeAttacked(enemyBoard, yCoord, xCoord) {
+        
+    //     const cell = enemyBoard.board[yCoord][xCoord];
+    //     if (cell.isCellMissed) {
+    //         return false;
+    //     } 
+    //     else if (cell.isCellHit) {
+    //         return false;
+    //     }
+    //     else {
+    //         return true;
+    //     }
+    // }
+
+    // checkAdjacentAttackable(enemyBoard, yCoord, xCoord) {
+    //     const coordinate = enemyBoard.board[yCoord][xCoord];
+
+    //     if (coordinate['ship'].axis === 'y') {
+    //         if (this.canBeAttacked(enemyBoard, yCoord+1, xCoord)) {
+    //             return true;
+    //         } else if (this.canBeAttacked(enemyBoard, yCoord-1, xCoord)) {
+    //             return true;
+    //         }
+    //     } else {
+    //         if (this.canBeAttacked(enemyBoard, yCoord, xCoord+1)) {
+    //             return true;
+    //         } else if (this.canBeAttacked(enemyBoard, yCoord, xCoord-1)) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
 }
 

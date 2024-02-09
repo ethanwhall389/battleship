@@ -30,38 +30,39 @@ class GameBoard {
         return array;
     }
 
-    placeShip(vertCoord, horzCoord, length, orientation, name) {
+    placeShip(xCoord, yCoord, length, orientation, name) {
+        // console.log(`x coord: ${xCoord}, yCoord: ${yCoord}`);
         const ship = new Ship(name, length, orientation);
-        if (orientation === 'horiz') {
-            //check for horiz board overflow
-            if (horzCoord+length-1 > this.width-1) {
+        if (orientation === 'x') {
+            //check for x board overflow
+            if (xCoord+length-1 > this.width-1) {
                 return false;
             } 
             //check for ship overlap
-            else if (this.checkHorizOverlap(vertCoord, horzCoord, length)) {
+            else if (this.checkXOverlap(yCoord, xCoord, length)) {
                 return false;
             }
             //Place ship
             else {
                 for (let i = 0; i < length; i++) {
-                    this.board[vertCoord][horzCoord+i]['ship'] = ship;
+                    this.board[yCoord][xCoord+i]['ship'] = ship;
                 }
                 this.shipsNum++;
                 return true;
             }
-        } else if (orientation === 'vert') {
-            //check for vertical board overflow
-            if (vertCoord+length-1 > this.height-1) {
+        } else if (orientation === 'y') {
+            //check for y board overflow
+            if (yCoord+length-1 > this.height-1) {
                 return false;
             } 
             //check for vertical ship overlap
-            else if (this.checkVertOverlap(vertCoord, horzCoord, length)) {
+            else if (this.checkYOverlap(yCoord, xCoord, length)) {
                 return false;
             }
             //Place ship
             else {
                 for (let i = 0; i < length; i++) {
-                    this.board[vertCoord+i][horzCoord]['ship'] = ship;
+                    this.board[yCoord+i][xCoord]['ship'] = ship;
                 }
                 this.shipsNum++;
                 return true;
@@ -69,8 +70,8 @@ class GameBoard {
         }
     }
 
-    hasShip(vertCoord, horzCoord) {
-        if (this.board[vertCoord][horzCoord]['ship'] === false) {
+    hasShip(yCoord, xCoord) {
+        if (this.board[yCoord][xCoord]['ship'] === false) {
             return false;
         } else {
             return true;
@@ -79,14 +80,14 @@ class GameBoard {
 
     // hitExists()
 
-    receiveAttack(vertCoord, horzCoord) {
-        const coordinate = this.board[vertCoord][horzCoord];
+    receiveAttack(yCoord, xCoord) {
+        const coordinate = this.board[yCoord][xCoord];
         
-        if (this.hasShip(vertCoord, horzCoord)) {
+        if (this.hasShip(yCoord, xCoord)) {
             if (coordinate['isCellHit'] === false) {
                 coordinate['isCellHit'] = true;
-                coordinate['ship'].hit(vertCoord, horzCoord);
-                this.hits.push([vertCoord, horzCoord]);
+                coordinate['ship'].hit(yCoord, xCoord);
+                this.hits.push([yCoord, xCoord]);
             }
         } else if (coordinate['isCellMissed'] === false) {
             coordinate['isCellMissed'] = true;
@@ -114,9 +115,9 @@ class GameBoard {
         return false;
     }
 
-    checkHorizOverlap(vertCoord, horzCoord, shipLength) {
+    checkXOverlap(yCoord, xCoord, shipLength) {
         for (let i = 0; i < shipLength; i++) {
-            if (this.board[vertCoord][horzCoord+i]['ship'] !== false) {
+            if (this.board[yCoord][xCoord+i]['ship'] !== false) {
                 //has overlap
                 return true;
             }
@@ -125,9 +126,9 @@ class GameBoard {
         return false;
     }
     
-    checkVertOverlap(vertCoord, horzCoord, shipLength) {
+    checkYOverlap(yCoord, xCoord, shipLength) {
         for (let i = 0; i < shipLength; i++) {
-            if (this.board[vertCoord+i][horzCoord]['ship'] !== false) {
+            if (this.board[yCoord+i][xCoord]['ship'] !== false) {
                 //has overlap
                 return true;
             }
