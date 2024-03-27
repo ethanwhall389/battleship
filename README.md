@@ -1,5 +1,7 @@
 This project was the final project in the Javascript course as part of The Odin Project. 
 
+View live: https://ethanwhall389.github.io/battleship/
+
 Objectives:
  - Learn the basics of unit testing using Jest.
  - Show advanced knowledge of Vanilla JS by completing a complicated project.
