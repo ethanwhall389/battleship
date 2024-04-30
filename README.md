@@ -1,6 +1,6 @@
 # Battleship
 A working Battleship browser game with a smart AI computer opponent.
-View live: https://ethanwhall389.github.io/battleship/
+View live <a href="https://ethanwhall389.github.io/battleship/" target="_blank">here</a> 
 
 ## Tech Stack
 * Vanilla JavaScript
